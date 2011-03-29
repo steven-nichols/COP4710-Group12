@@ -25,8 +25,8 @@ class Account extends CI_Controller {
             exit();
         }
         // Only Trusted helpers should be allowed to Add/Modify accounts
-        $type = $this->session->userdata('account_type');
-        if($type < $this->User_model->$TRUSTED_HELPER){
+        $helperid = $this->session->userdata('user_id');
+        if($helperid < $this->User_model->is_trusted_helper($){
             die("Only people with 'Trusted Helper' level permissions can add ".
                 "or modify accounts");
         }      
