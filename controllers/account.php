@@ -27,7 +27,8 @@ class Account extends CI_Controller {
         // Only Trusted helpers should be allowed to Add/Modify accounts
         $type = $this->session->userdata('account_type');
         if($type < $this->User_model->$TRUSTED_HELPER){
-            die("Only people with 'Trusted Helper' level permissions can add or modify accounts");
+            die("Only people with 'Trusted Helper' level permissions can add ".
+                "or modify accounts");
         }      
 
 
@@ -78,17 +79,8 @@ class Account extends CI_Controller {
                 $this->load->view('registration_form');
             }
             else { // Modify existing user
-                // TODO: pull user information from database
-
-                $data = array (
-                    "first_name" => $first_name,
-                    "last_name" => $last_name,
-                    "email" => $email,
-                    "birthdate" => $birthdate,
-                    "user_type" => $user_type,
-                    "active" => $active,
-                    "picture" => $picture
-                )
+                // pull user information from database
+                $data = $this->User_model->get_user_data($userid);
                 $this->load->view('registration_form', $data);
             }
         }
@@ -100,24 +92,30 @@ class Account extends CI_Controller {
             $birthdate = $this->input->post('birthdate', TRUE);
             $user_type = $this->input->post('user_type');
             $active = $this->input->post('active');
-            $pic_loc = $this->input->post('pic_loc');
+            $picture = $this->input->post('picture');
 
             // Attempt to add the new user to the database
-            $success = $this->User_model->add_new_user($first_name, $last_name,
-                 $password, $email, $birthdate, $user_type, $active, $pic_loc);
+            if($userid == null) {
+                $success = $this->User_model->add_new_user($first_name, $last_name,
+                    $password, $birthdate, $user_type, $active, $picture);
+            }
+            else {
+                $success = $this->User_model->modify_user($userid, $first_name,
+                    $last_name, $password, $birthdate, $user_type, $active, $picture);
+            }
 
             if($success)
             {
                 $data = array(
                     "first_name" => $first_name,
                     "last_name" => $last_name
-                    "picture" => $pic_loc
+                    "picture" => $picture
                 );
                 $this->load->view('registration_success', $data);
             }
             else
             {
-                echo "An error occured.";
+                echo "An error occured when trying to add/modify the account.";
             }
         }
     }
