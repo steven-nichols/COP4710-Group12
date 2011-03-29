@@ -21,9 +21,9 @@ class Login extends CI_Controller {
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field' => 'username',
-                'label' => 'Username',
-                'rules' => 'required|callback__authentication_check[password]'
+                'field' => 'name',
+                'label' => 'Name',
+                'rules' => 'required'
             ),
             array(
                 'field' => 'password',
@@ -35,16 +35,16 @@ class Login extends CI_Controller {
 
         if($this->form_validation->run() == FALSE)
         {
+            // The validation failed, so try again
             $this->session->keep_flashdata('redirect');
             $this->load->view('login_form');
         }
         else {
-            // Run username through XSS filter
-            $username = $this->input->post('username', TRUE);
+            $name = $this->input->post('Name', TRUE);
             $password = $this->input->post('password');
 
-            // Double check authentication
-            $success = $this->Login_model->authenticate($username, $password);
+            // Try to authenticate
+            $success = $this->Login_model->authenticate($name, $password);
             if($success)
             {
                 $dest = $this->session->flashdata('redirect');
@@ -54,23 +54,11 @@ class Login extends CI_Controller {
                     redirect("/");
             }
             else {
-                echo "Invalid username/password";
+                $this->load->view('login_fail');
             }
         }
     }
-    
-    function _authentication_check($username, $password){
-        if($this->Login_model->authenticate($username, $password))
-        {
-            return true;
-        }
-        else
-        {
-            $this->form_validation->set_message('_authentication_check', 'Incorrect username or password');
-            return false;
-        }
-    }
-
+   
     function logout(){
         $this->Login_model->logout();
         echo "Successfully logged out.";

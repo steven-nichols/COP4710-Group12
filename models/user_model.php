@@ -9,10 +9,7 @@ class User_model extends CI_Model {
         
     }
 
-    function salt_password($password){
-        return sha1($password.$this->config->item('encryption_key'));
-    }
-
+    
     /**
     * Adds a new user to the database.
     * 
@@ -33,7 +30,7 @@ class User_model extends CI_Model {
     /**
      * Updates a user entry
      */
-    function add_new_user($first_name, $last_name, $password, $birthdate,
+    function modify_user($userid, $first_name, $last_name, $password, $birthdate,
         $account_type, $active, $picture)
     {
         // TODO: put update query here
@@ -52,6 +49,19 @@ class User_model extends CI_Model {
             return $query->row_array();
         else
             return null;
+    }
+
+    /**
+     * Protect passwords from devious little children and their SQL injection
+     * attacks.
+     */
+    function salt_password($password){
+        return sha1($password.$this->config->item('encryption_key'));
+    }
+
+    function is_trusted_helper($userid){
+        // TODO: check if userid belongs to a trusted helper
+        return false;
     }
 }
 ?>
