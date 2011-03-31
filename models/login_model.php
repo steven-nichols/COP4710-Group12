@@ -27,14 +27,15 @@ class Login_model extends CI_Model {
      */
     function authenticate($name, $password)
     {
-        if($this->User_model->password_match($name, $password))
+        $userid = $this->User_model->password_match($name, $password);
+        if($userid)
         {
             //TODO: get the userid from the (name, password) pair
 
             $user_data = $this->User_model->get_user_data($userid);
                 
             $session_info = array(
-                "user_id" => $user_data['user_id'],
+                "userid" => $user_data['userid'],
                 "first_name" => $user_data['first_name'],
                 "last_name" => $user_data['last_name'],
                 "logged_in" => true

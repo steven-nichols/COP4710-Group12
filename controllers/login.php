@@ -21,7 +21,7 @@ class Login extends CI_Controller {
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field' => 'name',
+                'field' => 'firstname',
                 'label' => 'Name',
                 'rules' => 'required'
             ),
@@ -37,10 +37,10 @@ class Login extends CI_Controller {
         {
             // The validation failed, so try again
             $this->session->keep_flashdata('redirect');
-            $this->load->view('login_form');
+            $this->load->view('login_view');
         }
         else {
-            $name = $this->input->post('Name', TRUE);
+            $name = $this->input->post('firstname', TRUE);
             $password = $this->input->post('password');
 
             // Try to authenticate
@@ -61,7 +61,7 @@ class Login extends CI_Controller {
    
     function logout(){
         $this->Login_model->logout();
-        echo "Successfully logged out.";
+        $this->load->view('logout_view');
     }
 }
 ?>

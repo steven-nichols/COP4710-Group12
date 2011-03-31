@@ -23,7 +23,7 @@ class User_model extends CI_Model {
 
 
         return $this->db->query($sql, array($first_name, $last_name, 
-            $this->salt_password($password), $birthdate, $account_type,
+            $password, $birthdate, $account_type,
             $active, $picture));
     }
     
@@ -59,9 +59,29 @@ class User_model extends CI_Model {
         return sha1($password.$this->config->item('encryption_key'));
     }
 
+    /**
+     * Returns true if the user's account type is Trusted User.
+     **/
     function is_trusted_helper($userid){
         // TODO: check if userid belongs to a trusted helper
         return false;
     }
+
+    /**
+     * Used for authenticating the user. Returns null if the username/password
+     * pair DO NOT match an existing user in the database, otherwise return the
+     * userid of the matching user.
+     **/
+    function password_match($username, $password){
+        $sql = "SELECT userid FROM users WHERE first_name = ? AND password = ? LIMIT 1";
+
+        $query = $this->db->query($sql, array($username, $password));
+        
+        if($query->num_rows <= 0)
+            return null;
+        else
+            return $query->row()->userid;
+    }
+
 }
 ?>
