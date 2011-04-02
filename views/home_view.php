@@ -5,6 +5,7 @@
 
 <ul>
 <li><?php echo anchor('login/logout', 'Log out'); ?></li>
+<li><?php echo anchor('order', 'Place a transaction'); ?></li>
 </ul>
 
 </body>

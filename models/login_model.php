@@ -30,8 +30,6 @@ class Login_model extends CI_Model {
         $userid = $this->User_model->password_match($name, $password);
         if($userid)
         {
-            //TODO: get the userid from the (name, password) pair
-
             $user_data = $this->User_model->get_user_data($userid);
                 
             $session_info = array(

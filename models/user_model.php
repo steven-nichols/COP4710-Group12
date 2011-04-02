@@ -64,7 +64,16 @@ class User_model extends CI_Model {
      **/
     function is_trusted_helper($userid){
         // TODO: check if userid belongs to a trusted helper
-        return false;
+
+        // This is a hack
+        $TRUSTED = 2;
+
+        $sql = "SELECT type FROM users WHERE userid = ?";
+        $query = $this->db->query($sql, array($userid));
+        if($query->num_rows == 1)
+            return ($query->row()->type >= $TRUSTED);
+        else 
+            return false;
     }
 
     /**
