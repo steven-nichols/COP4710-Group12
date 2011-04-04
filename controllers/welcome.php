@@ -17,8 +17,10 @@ class Welcome extends CI_Controller {
             redirect('/login');
             exit();
         }
-
-        $this->load->view('home_view');
+        $data = array(
+            'first_name' => $this->session->userdata['first_name']
+        );
+        $this->load->view('home_view', $data);
 	}
 }
 
