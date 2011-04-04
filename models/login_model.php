@@ -33,9 +33,10 @@ class Login_model extends CI_Model {
             $user_data = $this->User_model->get_user_data($userid);
                 
             $session_info = array(
-                "userid" => $user_data['userid'],
+                "userid" => $user_data['userID'],
                 "first_name" => $user_data['first_name'],
                 "last_name" => $user_data['last_name'],
+                "picture" => $user_data['picture'],
                 "logged_in" => true
             );
 
