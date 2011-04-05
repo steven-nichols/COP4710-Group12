@@ -7,6 +7,8 @@ class Account extends CI_Controller {
         parent::__construct();
         
         $this->load->model('User_model');
+        $this->load->library('session');
+        $this->load->helper(array('url', 'form'));
     }
     function index(){
         $this->addmodify();

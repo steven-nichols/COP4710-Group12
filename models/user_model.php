@@ -1,6 +1,11 @@
 <?php
 class User_model extends CI_Model {
-    
+    // Class constants
+    const TYPE_CHILD = "child";
+    const TYPE_TEEN = "teen";
+    const TYPE_ADULT = "adult";
+    const TYPE_TRUSTED = "trusted";
+
     function __construct()
     {
         parent::__construct();
@@ -42,7 +47,7 @@ class User_model extends CI_Model {
      *
      */
     function get_user_data($userid){
-        $sql = "SELECT * FROM users WHERE userid = ? LIMIT 1";
+        $sql = "SELECT * FROM users WHERE userID = ? LIMIT 1";
 
         $query = $this->db->query($sql, array($userid));
         if($query->num_rows == 1)
@@ -63,15 +68,37 @@ class User_model extends CI_Model {
      * Returns true if the user's account type is Trusted User.
      **/
     function is_trusted_helper($userid){
-        // TODO: check if userid belongs to a trusted helper
-
-        // This is a hack
-        $TRUSTED = 2;
-
-        $sql = "SELECT type FROM users WHERE userid = ?";
+        $sql = "SELECT type FROM users WHERE userID = ?";
         $query = $this->db->query($sql, array($userid));
+
         if($query->num_rows == 1)
-            return ($query->row()->type >= $TRUSTED);
+            return ($query->row()->type == self::TYPE_TRUSTED);
+        else 
+            return false;
+    }
+
+    /**
+     * Returns true if the user's account type is Trusted User.
+     **/
+    function is_adult_helper($userid){
+        $sql = "SELECT type FROM users WHERE userID = ?";
+        $query = $this->db->query($sql, array($userid));
+
+        if($query->num_rows == 1)
+            return ($query->row()->type == self::TYPE_ADULT);
+        else 
+            return false;
+    }
+
+    /**
+     * Returns true if the user's account type is a child's.
+     **/
+    function is_child($userid){
+        $sql = "SELECT type FROM users WHERE userID = ?";
+        $query = $this->db->query($sql, array($userid));
+
+        if($query->num_rows == 1)
+            return ($query->row()->type == self::TYPE_CHILD);
         else 
             return false;
     }
@@ -82,14 +109,14 @@ class User_model extends CI_Model {
      * userid of the matching user.
      **/
     function password_match($username, $password){
-        $sql = "SELECT userid FROM users WHERE first_name = ? AND password = ? LIMIT 1";
+        $sql = "SELECT userID FROM users WHERE first_name = ? AND password = ? LIMIT 1";
 
         $query = $this->db->query($sql, array($username, $password));
         
-        if($query->num_rows <= 0)
-            return null;
-        else
-            return $query->row()->userid;
+        if($query->num_rows == 1)
+            return $query->row()->userID;
+        
+        return null;
     }
 
 }
