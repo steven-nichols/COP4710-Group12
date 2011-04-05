@@ -89,6 +89,20 @@ class User_model extends CI_Model {
         else 
             return false;
     }
+
+    /**
+     * Returns true if the user's account type is a child's.
+     **/
+    function is_child($userid){
+        $sql = "SELECT type FROM users WHERE userID = ?";
+        $query = $this->db->query($sql, array($userid));
+
+        if($query->num_rows == 1)
+            return ($query->row()->type == self::TYPE_CHILD);
+        else 
+            return false;
+    }
+
     /**
      * Used for authenticating the user. Returns null if the username/password
      * pair DO NOT match an existing user in the database, otherwise return the
