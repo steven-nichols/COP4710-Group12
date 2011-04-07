@@ -45,14 +45,14 @@ class Account extends CI_Controller {
 
         $config = array(
             array(
-                'field' => 'fname',
+                'field' => 'first_name',
                 'label' => 'First Name',
                 'rules' => 'required|trim|strip_tags|max_length[50]'
             ),
             array(
-                'field' => 'lname',
+                'field' => 'last_name',
                 'label' => 'Last Name',
-                'rules' => 'required|trim|strip_tags|max_length[50]'
+                'rules' => 'trim|strip_tags|max_length[50]'
             ),
             array(
                 'field' => 'password',
@@ -88,8 +88,8 @@ class Account extends CI_Controller {
         }
         else // Form validation passed 
         {
-            $first_name = $this->input->post('fname', TRUE);
-            $last_name = $this->input->post('lname', TRUE);
+            $first_name = $this->input->post('first_name', TRUE);
+            $last_name = $this->input->post('last_name', TRUE);
             $password = $this->input->post('password');
             $birthdate = $this->input->post('birthdate', TRUE);
             $user_type = $this->input->post('user_type');
@@ -127,16 +127,19 @@ class Account extends CI_Controller {
      */
     function valid_date($str)
     {
-         if ( ereg("([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})", $str) ) {
-            $arr = split("-",$str);     // splitting the array
-            $yy = $arr[0];            // first element of the array is year
-            $mm = $arr[1];            // second element is month
-            $dd = $arr[2];            // third element is days
-            return ( checkdate($mm, $dd, $yy) ); 
-         } else {
-            $this->validation->set_message('date_check', 'Please enter dd/mm/yyyy');
-            return FALSE;
-         }
+        $pattern = "((0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d)"; 
+        if ( preg_match($pattern, $str) == 0){
+            $arr = explode("/",$str);     // splitting the array
+            $mm = (int)$arr[0];            // second element is month
+            $dd = (int)$arr[1];            // third element is days
+            $yyyy = (int)$arr[2];            // first element of the array is year
+            
+            if ( checkdate($mm, $dd, $yyyy) )
+                return true;
+         } 
+        $this->form_validation->set_message('valid_date', 'Please enter date in mm/dd/yyyy format');
+        return false;
+
     }  
 }
 ?>
