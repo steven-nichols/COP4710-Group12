@@ -7,6 +7,8 @@ class Account extends CI_Controller {
         parent::__construct();
         
         $this->load->model('User_model');
+        $this->load->library('session');
+        $this->load->helper(array('url', 'form'));
     }
     function index(){
         $this->addmodify();
@@ -25,8 +27,8 @@ class Account extends CI_Controller {
             exit();
         }
         // Only Trusted helpers should be allowed to Add/Modify accounts
-        $helperid = $this->session->userdata('user_id');
-        if($helperid < $this->User_model->is_trusted_helper($helperid){
+        $helperid = $this->session->userdata('userid');
+        if(!$this->User_model->is_trusted_helper($helperid)){
             die("Only people with 'Trusted Helper' level permissions can add ".
                 "or modify accounts");
         }      
@@ -108,7 +110,7 @@ class Account extends CI_Controller {
             {
                 $data = array(
                     "first_name" => $first_name,
-                    "last_name" => $last_name
+                    "last_name" => $last_name,
                     "picture" => $picture
                 );
                 $this->load->view('registration_success', $data);

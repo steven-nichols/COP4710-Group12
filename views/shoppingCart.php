@@ -62,7 +62,7 @@ Select Buyer:
 
 <?php foreach($users as $user): ?>
 <?php echo '<option value="' . $user->lname . $user->fname . '">'; ?>
-<?php echo $user->lname . ', ' $user->fname; ?>
+<?php echo $user->lname . ', ' . $user->fname; ?>
 <?php echo '</option>'; ?>
 <?php endforeach; ?>
 
@@ -80,16 +80,16 @@ $colNum = 0;
 
 foreach($listitems as $listitem):
 
-if(colNum == 4)
+if($colNum == 4)
 {
    echo '</tr><tr>';
-	 colNum = 0;
+	 $colNum = 0;
 }
 
 //The onClick is what adds items to the invoice list
 //The format is addItem(itemNumber, cost, description) the quantity is obtained via prompt
 echo '<td><center><img src="' . $listitem->image . '" height="128" width="128" onClick="addItem(1, 2, \'really cool\')"/><br>' . $listitem->quantity . '</center></td>';
-colNum++;
+$colNum++;
 
 endforeach;
 
