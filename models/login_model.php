@@ -33,16 +33,17 @@ class Login_model extends CI_Model {
         }
     }
 
-    /*
+    /**
      * Attempt to authenticate user. If sucessful, it marks the user as 
      * 'logged_in' and places commonly used data like the name and userid into 
      * the user's cookie and returns true. Otherwise, return false.
      *
      * \param $name The name of the user used for authentication (e.i., a 
-     * username).
+     *        username).
      * \param $password The password the user entered on the login page.
+     *
      * \return TRUE if the user supplied credentials match an existing user in 
-     * the database and FALSE otherwise.
+     *         the database and FALSE otherwise.
      */
     function authenticate($name, $password)
     {
