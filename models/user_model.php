@@ -26,12 +26,12 @@ class User_model extends CI_Model {
      * \param $active A boolean indicating whether we are inserting an active 
      *        user (TRUE) or an inactive user (FALSE).
      * \param $picture The filename of a picture of the new user.  If the name 
-     *        is unknown, either place NULL in this field and allow the DBMS to 
-     *        select the default or specify its usage with "defaultuser.jpg"
+     *        is unknown, do not include it in the function call or specify 
+     *        "defaultuser.jpg".
      * \return TRUE on success, FALSE on failure
      */
     function add_new_user($first_name, $last_name, $password, $birthdate, 
-        $account_type, $active, $picture)
+        $account_type, $active, $picture='defaultuser.jpg')
     {
         $passwd = $this->salt_password($password);
 
@@ -64,12 +64,13 @@ class User_model extends CI_Model {
      * \param $picture New or retained picture filename.  NULL will set this
      *        value to its default: "defaultuser.jpg"
      * \param $changepasswd Set to TRUE to indicate that the value in $password 
-     *        is a new password to add to the database.  Set to FALSE to 
-     *        indicate that the old password is to be retained.
+     *        is a new password to add to the database.  Omit or set to FALSE
+     *        to indicate that the old password is to be retained.
+     *
      * \return TRUE on success, FALSE on failure 
      */
     function modify_user($userid, $first_name, $last_name, $password, 
-        $birthdate, $account_type, $active, $picture, $changepasswd)
+        $birthdate, $account_type, $active, $picture, $changepasswd=0)
     {
         if($changepassword){
             $passwd = $this->salt_password($password);
@@ -115,6 +116,7 @@ class User_model extends CI_Model {
      * encryption key and the result is run through SHA1.
      *
      * \param $password The cleartext password to salt and hash
+     *
      * \return The salted and hashed password.
      */
     function salt_password($password)
@@ -126,6 +128,7 @@ class User_model extends CI_Model {
      * Returns true if the user's account type is Trusted Helper.
      *
      * \param The id number of the user to test.
+     *
      * \return TRUE if the user is a trusted helper, FALSE if they are not, 
      *         FALSE on failure.
      */
@@ -144,6 +147,7 @@ class User_model extends CI_Model {
      * Returns true if the user's account type is Adult Helper.
      *
      * \param The id number of the user to test.
+     *
      * \return TRUE if the user is an adult helper, FALSE if they are not, 
      *         FALSE on failure.
      */
@@ -162,6 +166,7 @@ class User_model extends CI_Model {
      * Returns true if the user's account type is teen Helper.
      *
      * \param The id number of the user to test.
+     *
      * \return TRUE if the user is an teen helper, FALSE if they are not, 
      *         FALSE on failure.
      */
@@ -180,6 +185,7 @@ class User_model extends CI_Model {
      * Returns true if the user's account type is Child.
      *
      * \param The id number of the user to test.
+     *
      * \return TRUE if the user is a child, FALSE if they are not, 
      *         FALSE on failure.
      */
@@ -195,10 +201,12 @@ class User_model extends CI_Model {
     }
 
     /**
-     * Used for authenticating a user at login
+     * Used for authenticating a user at login.  Will always fail if the user
+     * is inactive.
      *
      * \param $username The user's first name
      * \param $password The user's cleartext password.
+     *
      * \return NULL if the username/password pair DO NOT match an existing user 
      *         in the database, otherwise return the userid of the matching 
      *         user.
@@ -207,7 +215,7 @@ class User_model extends CI_Model {
     {
         $passwd = $this->salt_password($password);
         $sql = "SELECT `userID` FROM `users` WHERE `first_name` = ? AND 
-            `password` = ? LIMIT 1";
+            `password` = ? AND `active` = 1 LIMIT 1";
 
         $query = $this->db->query($sql, array($username, $passwd));
 
@@ -220,10 +228,22 @@ class User_model extends CI_Model {
     /**
      * Return a count of all users in the database.
      *
+     * \param $inactive Boolean, should inactive users be included. If omitted,
+     *        FALSE is assumed.
+     *
      * \return See above.
      */
-    function get_user_count()
+    function get_user_count($inactive=0)
     {
+        if($inactive){
+            $sql = "SELECT COUNT(*) FROM `users`";
+        } else {
+            $sql = "SELECT COUNT(*) FROM `users` WHERE `active` = 1";
+        }
+        
+        $query = $this->db->query($sql);
+        
+        return $query->row_array();
     }
     
     /**
@@ -233,11 +253,26 @@ class User_model extends CI_Model {
      * \param $start The offset from the start of the list from which the 
      *        returned users are taken.
      * \param $count The number of items to return
+     * \param $inactive Boolean, should inactive user be included. If omitted,
+     *        FALSE is assumed.
      *
      * \return The sorted range of users as an array, null on failure.
      */    
-    function get_user_range($start, $count)
+    function get_user_range($start, $count, $inactive=0)
     {
+        if($inactive){
+            $sql = "SELECT * FROM `users` ORDER BY `userID` LIMIT ?,  ?";
+        } else {
+            $sql = "SELECT * FROM `users` WHERE `active` = 1 ORDER BY `userID`
+            LIMIT ?, ?";
+        }
+        
+        $query = $this->db->query($sql, array($start=0, $count=30));
+
+        if($query->num_rows > 0)
+        return $query->result_array();
+
+        return null;
     }
     
     /**
@@ -246,11 +281,26 @@ class User_model extends CI_Model {
      * \param $type The type of user to search for.  Current values are listed 
      *        as constants at the top of the file.  Check the database for new 
      *        additions.
+     * \param $inactive Boolean, do we return any inactive users. If omitted,
+     *        FALSE is assumed.
      *
      * \return All found users in an array or null on failure.
      */    
-    function get_user_by_type($type)
+    function get_user_by_type($type, $inactive=0)
     {
+        if($inactive){
+            $sql = "SELECT * from `users` WHERE `type` = ? ORDER BY `userID`";
+        } else {
+            $sql = "SELECT * from `users` WHERE `type` = ? AND `active` = 1 
+                ORDER BY `userID`";
+        }
+    
+        $query = $this->db->query($sql, array($type));
+        
+        if($query->num_rows > 0)
+            return $query->result_array();
+
+        return null;
     }
 }
 ?>
