@@ -10,9 +10,6 @@ class Account extends CI_Controller {
         $this->load->library('session');
         $this->load->helper(array('url', 'form'));
     }
-    function index(){
-        $this->addmodify();
-    }
 
     /*
      * $userid is the ID of the user to be modified.
@@ -43,35 +40,57 @@ class Account extends CI_Controller {
                 <td class="error">','</td>
             </tr>');
 
-        $config = array(
-            array(
-                'field' => 'first_name',
-                'label' => 'First Name',
-                'rules' => 'required|trim|strip_tags|max_length[50]'
-            ),
-            array(
-                'field' => 'last_name',
-                'label' => 'Last Name',
-                'rules' => 'trim|strip_tags|max_length[50]'
-            ),
-            array(
-                'field' => 'password',
-                'label' => 'Password',
-                'rules' => 'required|min_length[6]'
-            ),
-            array(
-                'field' => 'pass_conf',
-                'label' => 'Confirm Password',
-                'rules' => 'required|matches[password]'
-            ),
-            array(
-                'field' => 'birthdate',
-                'label' => 'Birthdate',
-                'rules' => 'trim|callback_valid_date'
-            )
-        );
-
+        if($userid == null){
+            $config = array(
+                array(
+                    'field' => 'first_name',
+                    'label' => 'First Name',
+                    'rules' => 'required|trim|strip_tags|max_length[50]'
+                ),
+                array(
+                    'field' => 'last_name',
+                    'label' => 'Last Name',
+                    'rules' => 'trim|strip_tags|max_length[50]'
+                ),
+                array(
+                    'field' => 'password',
+                    'label' => 'Password',
+                    'rules' => 'required|min_length[6]'
+                ),
+                array(
+                    'field' => 'pass_conf',
+                    'label' => 'Confirm Password',
+                    'rules' => 'required|matches[password]'
+                ),
+                array(
+                    'field' => 'birthdate',
+                    'label' => 'Birthdate',
+                    'rules' => 'trim|callback_valid_date'
+                )
+            );
+        }
+        else {
+            // Do not force the user to update their password
+            $config = array(
+                array(
+                    'field' => 'first_name',
+                    'label' => 'First Name',
+                    'rules' => 'required|trim|strip_tags|max_length[50]'
+                ),
+                array(
+                    'field' => 'last_name',
+                    'label' => 'Last Name',
+                    'rules' => 'trim|strip_tags|max_length[50]'
+                ),
+                array(
+                    'field' => 'birthdate',
+                    'label' => 'Birthdate',
+                    'rules' => 'trim|callback_valid_date'
+                )
+            );
+        }
         $this->form_validation->set_rules($config);
+
 
         // First run or there were errors with the form
         if($this->form_validation->run() == FALSE)
@@ -96,14 +115,22 @@ class Account extends CI_Controller {
             $active = $this->input->post('active');
             $picture = $this->input->post('picture');
 
+            echo "VALIDATION PASSED: id=". $userID;
             // Attempt to add the new user to the database
             if($userid == null) {
                 $success = $this->User_model->add_new_user($first_name, $last_name,
                     $password, $birthdate, $user_type, $active, $picture);
             }
             else {
-                $success = $this->User_model->modify_user($userid, $first_name,
-                    $last_name, $password, $birthdate, $user_type, $active, $picture);
+                // Change query slightly if user includes an updated password
+                if($password)
+                    $changepasswd = true;
+                else
+                    $changepasswd = false;
+
+                $success = $this->User_model->modify_user((int)$userid, $first_name,
+                    $last_name, $password, $birthdate, $user_type, $active,
+                    $picture, $changepasswd);
             }
 
             if($success)

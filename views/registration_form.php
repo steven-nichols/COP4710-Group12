@@ -20,22 +20,34 @@
 <td>
 <h1>Register</h1>
 
-<?php echo form_open('account'); ?>
-<input type="hidden" name="userid" value="<?php echo set_value('userid'); ?>">
+<?php echo form_open(''); ?>
+
+<input type="hidden" name="userid" value="<?php if(isset($userID)) echo $userID; ?>">
 
 <table class="input-form">
     <tr>
         <th class="required">First Name</th>
         <td><input type="text" size="15" maxlength="50" name="first_name" 
-            value="<?php echo set_value('first_name'); ?>"></td>
+        value="<?php 
+if(isset($userID))
+    echo $first_name;
+else
+    echo set_value('first_name');
+?>"></td>
     </tr>
     <?php echo form_error('first_name'); ?>
 
     <tr>
         <th>Last Name</th>
         <td><input type="text" size="15" maxlength="50" name="last_name" 
-            value="<?php echo set_value('last_name'); ?>"></td>
+            value="<?php 
+if(isset($userID))
+    echo $last_name;
+else
+    echo set_value('last_name');
+?>"></td>
     </tr>
+
 
     <tr>
         <th class="required">Password</th>
@@ -51,12 +63,16 @@
     </tr>
     <?php echo form_error('pass_conf'); ?>
 
+
     <tr>
         <th class="required">Birthdate</th>
         <td>
             <input id="date1" type="text" size="11" maxlength="100" 
                 name="birthdate" value="<?php 
-if(isset($_POST['birthdate'])){
+if(isset($userID)){
+    echo $birthdate;
+}
+elseif(isset($_POST['birthdate'])){
     echo set_value('birthdate');
 }
 else {
