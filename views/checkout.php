@@ -74,10 +74,10 @@ Buyer: <?php echo "user for transaction";?>
 	 foreach($listitems as $listitem):
 	    echo '<tr>';
 			
-			echo '<td id="itemNumber' . itemTotal . '"></td>';
-			echo '<td id="quantity' . itemTotal . '"></td>';
-			echo '<td id="cost' . itemTotal . '"></td>';
-			echo '<td id="description' . itemTotal . '"></td>';
+			echo '<td id="itemNumber' . itemTotal . '">' . $listitem->itemNumber . '</td>';
+			echo '<td id="quantity' . itemTotal . '">' . $listitem->quantity . '</td>';
+			echo '<td id="cost' . itemTotal . '">' . $listitem->pointCost . '</td>';
+			echo '<td id="description' . itemTotal . '">' . $listitem->description . '</td>';
 			
 			echo '</tr>';
 			
