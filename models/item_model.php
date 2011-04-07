@@ -1,6 +1,6 @@
 <?php
 
-class User_model extends CI_Model {
+class Item_model extends CI_Model {
     // Class constants
     const TYPE_TOY = "toy";
     const TYPE_ACCESSORY = "accessory";
