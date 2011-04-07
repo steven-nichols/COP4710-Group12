@@ -81,7 +81,7 @@ class User_model extends CI_Model {
             return $this->db->query($sql, array($first_name, $last_name, 
                 $passwd, $birthdate, $account_type, $active, $picture, 
                 $userid));
-        }else{
+        } else {
             $sql = "UPDATE `users` SET `first_name` = ?, `last_name` = ?, 
                 `birthdate` = ?, `type` = ?, `active` = ?, `picture` = ? WHERE 
                 `userID` = ?";
@@ -267,7 +267,7 @@ class User_model extends CI_Model {
             LIMIT ?, ?";
         }
         
-        $query = $this->db->query($sql, array($start=0, $count=30));
+        $query = $this->db->query($sql, array($start, $count));
 
         if($query->num_rows > 0)
         return $query->result_array();
