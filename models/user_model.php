@@ -33,7 +33,7 @@ class User_model extends CI_Model {
 	function add_new_user($first_name, $last_name, $password, $birthdate, 
 		$account_type, $active, $picture)
 	{
-		$passwd = salt_password($password);
+		$passwd = $this->salt_password($password);
 
 		$sql = "INSERT INTO `users` (`first_name`, `last_name`, `password`, 
 			`birthdate`, `type`, `active`, `picture`) VALUES (?, ?, ?, ?, ?, ?, 
@@ -72,7 +72,7 @@ class User_model extends CI_Model {
 		$birthdate, $account_type, $active, $picture, $changepasswd)
 	{
 		if($changepassword){
-			$passwd = salt_password($password);
+			$passwd = $this->salt_password($password);
 		
 			$sql = "UPDATE `users` SET `first_name` = ?, `last_name` = ?, 
 				`password` = ?, `birthdate` = ?, `type` = ?, `active` = ?, 
@@ -187,7 +187,7 @@ class User_model extends CI_Model {
 	 */
 	function password_match($username, $password)
 	{
-		$passwd = salt_password($password);
+		$passwd = $this->salt_password($password);
 		$sql = "SELECT `userID` FROM `users` WHERE `first_name` = ? AND 
 			`password` = ? LIMIT 1";
 
