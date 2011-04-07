@@ -10,6 +10,14 @@
 </head>
 <body>
 
+<table summary="">
+<tr>
+
+<td>
+<?php include("menu.php"); ?>
+</td>
+
+<td>
 <h1>Register</h1>
 
 <?php echo form_open('account'); ?>
@@ -64,6 +72,7 @@ else {
 <input type="submit" value="Submit" />
 
 </form>
-
+</td>
+</table>
 </body>
 </html>
