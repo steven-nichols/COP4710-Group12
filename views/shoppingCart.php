@@ -115,7 +115,7 @@ endforeach;
 <td id="totalCost">Total Cost: 0</td>
 
 <td width="65%"></td>
-<td><input type="submit" value="Checkout" /></td>
+<td><input type="submit" name="checkout" value="Checkout" /></td>
 </tr>
 </table>
 

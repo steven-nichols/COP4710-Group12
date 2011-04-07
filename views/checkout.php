@@ -105,7 +105,7 @@ Buyer: <?php echo "user for transaction";?>
 <br>
 
 <tr>
-<td><input type="submit" value="Confirm" /> / <input type="submit" value="Cancel" /></td>
+<td><input type="submit" name="confirm" value="Confirm" /> / <input type="submit" name="cancel" value="Cancel" /></td>
 </tr>
 <br>
 
