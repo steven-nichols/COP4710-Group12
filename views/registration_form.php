@@ -48,21 +48,16 @@ else
 ?>"></td>
     </tr>
 
-
     <tr>
-        <th class="required">Password</th>
-        <td><input type="password" size="15" maxlength="50" name="password" 
-            value="<?php echo set_value('password'); ?>"></td>
+        <th>Picture (optional)</th>
+        <td><input type="text" size="15" maxlength="50" name="picture" 
+        value="<?php 
+if(isset($userID))
+    echo $picture;
+else
+    echo set_value('picture');
+?>"></td>
     </tr>
-    <?php echo form_error('password'); ?>
-
-    <tr>
-        <th class="required">Confirm Password</th>
-        <td><input type="password" size="15" maxlength="50" name="pass_conf" 
-            value="<?php echo set_value('pass_conf'); ?>"></td>
-    </tr>
-    <?php echo form_error('pass_conf'); ?>
-
 
     <tr>
         <th class="required">Birthdate</th>
@@ -81,7 +76,52 @@ else {
             <a href="#" onClick="cal.select(document.forms[0].date1,'anchor1','MM/dd/yyyy'); return false;" title="cal.select(document.forms[0].date1,'anchor1','MM/dd/yyyy'); return false;" name="anchor1" id="anchor1">select</a>
         </td>
     </tr>
+
+
+
     <?php echo form_error('valid_date'); ?>
+
+    <tr>
+        <th class="required">Password</th>
+        <td><input type="password" size="15" maxlength="50" name="password" 
+            value="<?php echo set_value('password'); ?>"></td>
+    </tr>
+    <?php echo form_error('password'); ?>
+
+    <tr>
+        <th class="required">Confirm Password</th>
+        <td><input type="password" size="15" maxlength="50" name="pass_conf" 
+            value="<?php echo set_value('pass_conf'); ?>"></td>
+    </tr>
+    <?php echo form_error('pass_conf'); ?>
+
+    <tr>
+        <th>User type</th>
+        <td><select name="user_type">
+<?php 
+function write_option($value, $label, $default){
+    echo '<option value="'.$value.'"';
+    if(($default == $value) || (set_value('type') == $value))
+        echo ' selected="yes"';
+    echo '>'.$label."</option>\n";
+}
+?>
+            <?php write_option('child', 'Child', $type); ?>
+            <?php write_option('teen', 'Teen', $type); ?>
+            <?php write_option('adult', 'Adult', $type); ?>
+            <?php write_option('trusted', 'Trusted', $type); ?>
+            </select>
+</td>
+    </tr>
+
+    <tr>
+        <th>Active</th>
+        <td><input type="checkbox" size="15" maxlength="50" name="active" 
+        value="true" <?php 
+if((isset($userID) && $active) || (set_value('active')))
+    echo "checked";
+?>></td>
+    </tr>
 
 </table>
 <p>* Required</p>

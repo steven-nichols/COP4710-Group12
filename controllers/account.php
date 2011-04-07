@@ -10,6 +10,9 @@ class Account extends CI_Controller {
         $this->load->library('session');
         $this->load->helper(array('url', 'form'));
     }
+    function index(){
+        $this->addmodify();
+    }
 
     /*
      * $userid is the ID of the user to be modified.
