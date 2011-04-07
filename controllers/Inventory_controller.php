@@ -26,12 +26,12 @@ class Inventory_controller extends CI_Controller {
 		
 		$items = $this->Inventory_model->get_all_items;
 		$listitems = array(
-						"itemNumber" => -1;
-						"purchaseLocation" => "";
-						"realCost" => -1;
-						"pointCost" => -1;
-						"description" => "";
-						"quantity" => -1;
+					"itemNumber" => -1;
+					"purchaseLocation" => "";
+					"realCost" => -1;
+					"pointCost" => -1;
+					"description" => "";
+				        "quantity" => -1;
 					);
 
 		foreach($items->result() as $item){
