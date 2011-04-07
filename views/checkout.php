@@ -38,11 +38,7 @@ function updateChange()
 <tr>
 
 <td>
-<img src="defaultuser.jpg" height="256" width="256" /> <br>
-<a href="mainPage.htm">Logout</a><br>
-<a href="mainPage.htm">View/Modify Profile</a><br>
-<a href="mainPage.htm">View History</a><br>
-<a href="mainPage.htm">Shopping Cart</a><br>
+<?php include("menu.php"); ?>
 </td>
 
 <td>
