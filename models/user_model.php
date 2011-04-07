@@ -187,7 +187,7 @@ class User_model extends CI_Model {
 	 */
 	function password_match($username, $password)
 	{
-		$passwd = salt_password($username);
+		$passwd = salt_password($password);
 		$sql = "SELECT `userID` FROM `users` WHERE `first_name` = ? AND 
 			`password` = ? LIMIT 1";
 
