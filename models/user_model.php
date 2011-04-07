@@ -47,7 +47,7 @@ class User_model extends CI_Model {
      *
      */
     function get_user_data($userid){
-        $sql = "SELECT * FROM users WHERE userID = ? LIMIT 1";
+        $sql = "SELECT * FROM users WHERE userID = $userid LIMIT 1";
 
         $query = $this->db->query($sql, array($userid));
         if($query->num_rows == 1)
@@ -68,7 +68,7 @@ class User_model extends CI_Model {
      * Returns true if the user's account type is Trusted User.
      **/
     function is_trusted_helper($userid){
-        $sql = "SELECT type FROM users WHERE userID = ?";
+        $sql = "SELECT type FROM users WHERE userID = $userid";
         $query = $this->db->query($sql, array($userid));
 
         if($query->num_rows == 1)
@@ -81,7 +81,7 @@ class User_model extends CI_Model {
      * Returns true if the user's account type is Trusted User.
      **/
     function is_adult_helper($userid){
-        $sql = "SELECT type FROM users WHERE userID = ?";
+        $sql = "SELECT type FROM users WHERE userID = $userid";
         $query = $this->db->query($sql, array($userid));
 
         if($query->num_rows == 1)
@@ -109,7 +109,7 @@ class User_model extends CI_Model {
      * userid of the matching user.
      **/
     function password_match($username, $password){
-        $sql = "SELECT userID FROM users WHERE first_name = ? AND password = ? LIMIT 1";
+        $sql = "SELECT userID FROM users WHERE first_name = $username AND password = $password LIMIT 1";
 
         $query = $this->db->query($sql, array($username, $password));
         
