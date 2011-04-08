@@ -24,6 +24,10 @@
 <?php endforeach; ?>
 </select>
 
+<!-- Hidden post field to let the form validator on the modify page
+know not to run validation immediately. //-->
+<input type="hidden" name="redirect" value="true"/>
+
 <input type="submit" value="Modify"/>
 </p>
 <?php echo form_close(); ?>

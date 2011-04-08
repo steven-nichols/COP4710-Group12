@@ -136,6 +136,7 @@ class Account extends CI_Controller {
         }      
         
         $userid = $this->input->post('userid');
+        $redirect = $this->input->post('redirect');
 
         $this->load->library('form_validation');
 
@@ -167,7 +168,7 @@ class Account extends CI_Controller {
 
 
         // First run or there were errors with the form
-        if($this->form_validation->run() == FALSE)
+        if($redirect || $this->form_validation->run() == FALSE)
         {
             // pull user information from database
             $data = $this->User_model->get_user_data($userid);

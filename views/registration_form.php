@@ -22,7 +22,6 @@
 
 <?php echo form_open(''); ?>
 
-<!-- Not sure if this will be needed or not //-->
 <input type="hidden" name="userid" value="<?php if(isset($userID)) echo $userID; ?>">
 
 <table class="input-form">
