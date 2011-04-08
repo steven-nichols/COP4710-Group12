@@ -1,11 +1,10 @@
 <html>
 <head>
+<meta HTTP-EQUIV="REFRESH" content="3; url=<?php echo site_url("account"); ?>">
 </head>
 <body>
 
-<p>A new user was successfully added to the database.</p>
-<p><a href="<?php echo site_url(); ?>">Return home</a> or <?php 
-echo anchor('account', 'Add another user'); ?></p>
+<p>The Users database was successfully updated.</p>
 
 </body>
 </html>

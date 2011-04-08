@@ -22,6 +22,7 @@
 
 <?php echo form_open(''); ?>
 
+<!-- Not sure if this will be needed or not //-->
 <input type="hidden" name="userid" value="<?php if(isset($userID)) echo $userID; ?>">
 
 <table class="input-form">
@@ -60,15 +61,15 @@ else
     </tr>
 
     <tr>
-        <th class="required">Birthdate</th>
+        <th class="required">Birth date</th>
         <td>
             <input id="date1" type="text" size="11" maxlength="100" 
                 name="birthdate" value="<?php 
-if(isset($userID)){
-    echo $birthdate;
-}
-elseif(isset($_POST['birthdate'])){
+if(isset($_POST['birthdate'])){
     echo set_value('birthdate');
+}
+elseif(isset($userID)){
+    echo $birthdate;
 }
 else {
     echo "mm/dd/yyyy";
@@ -118,7 +119,7 @@ function write_option($value, $label, $default){
         <th>Active</th>
         <td><input type="checkbox" size="15" maxlength="50" name="active" 
         value="true" <?php 
-if((isset($userID) && $active) || (set_value('active')))
+if( (!isset($userID)) || (isset($userID) && $active) )
     echo "checked";
 ?>></td>
     </tr>
