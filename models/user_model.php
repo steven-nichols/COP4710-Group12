@@ -33,6 +33,7 @@ class User_model extends CI_Model {
     function add_new_user($first_name, $last_name, $password, $birthdate, 
         $account_type, $active, $picture='defaultuser.jpg')
     {
+        $bday = $this->iso8601_date($birthdate);
         $passwd = $this->salt_password($password);
 
         $sql = "INSERT INTO `users` (`first_name`, `last_name`, `password`, 
@@ -40,7 +41,7 @@ class User_model extends CI_Model {
             ?)";
 
         return $this->db->query($sql, array($first_name, $last_name, $passwd, 
-            $birthdate, $account_type, $active, $picture));
+            $bday, $account_type, $active, $picture));
     }
 
     /**
@@ -72,22 +73,52 @@ class User_model extends CI_Model {
     function modify_user($userid, $first_name, $last_name, $password, 
         $birthdate, $account_type, $active, $picture, $changepasswd=0)
     {
-        if($changepassword){
+        $bday = $this->iso8601_date($birthdate);
+        if($changepasswd){
             $passwd = $this->salt_password($password);
-        
+
             $sql = "UPDATE `users` SET `first_name` = ?, `last_name` = ?, 
                 `password` = ?, `birthdate` = ?, `type` = ?, `active` = ?, 
                 `picture` = ? WHERE `userID` = ?";
             return $this->db->query($sql, array($first_name, $last_name, 
-                $passwd, $birthdate, $account_type, $active, $picture, 
+                $passwd, $bday, $account_type, $active, $picture, 
                 $userid));
         } else {
             $sql = "UPDATE `users` SET `first_name` = ?, `last_name` = ?, 
                 `birthdate` = ?, `type` = ?, `active` = ?, `picture` = ? WHERE 
                 `userID` = ?";
             return $this->db->query($sql, array($first_name, $last_name, 
-                $birthdate, $account_type, $active, $picture, $userid));
+                $bday, $account_type, $active, $picture, $userid));
         }
+    }
+
+    /*
+     * Converts a date in "MM/DD/YYYY" format to the ISO 8601 format of 
+     * "YYYY-MM-DD" which is used by MySQL.
+     *
+     * \param $str Date string in the form "MM/DD/YYYY"
+     * \returns Date string of the form "YYYY-MM-DD"
+     */ 
+    function iso8601_date($str){
+        $arr = explode("/",$str);
+        $mm = $arr[0];
+        $dd = $arr[1];
+        $yyyy = $arr[2];
+        return $yyyy."-".$mm."-".$dd;
+    }
+
+    /* Converts a date string in ISO 8601 form, i.e., "YYYY-MM-DD", which is 
+     * used by MySQL to the US format "MM/DD/YYYY".
+     *
+     * \param Date string of the form "YYYY-MM-DD"    
+     * \returns $str Date string in the form "MM/DD/YYYY"
+     * */
+    function us_date($str){
+        $arr = explode("-",$str);
+        $mm = $arr[1];
+        $dd = $arr[2];
+        $yyyy = $arr[0];
+        return $mm."/".$dd."/".$yyyy;
     }
 
     /**
@@ -242,8 +273,8 @@ class User_model extends CI_Model {
         }
         
         $query = $this->db->query($sql);
-        
-        return $query->row_array();
+        $result = $query->row_array(); 
+        return (int)$result['COUNT(*)'];
     }
     
     /**
