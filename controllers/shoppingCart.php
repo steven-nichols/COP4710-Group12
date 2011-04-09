@@ -19,34 +19,34 @@ class order extends CI_Controller {
             exit();
         }
         // Only Trusted helpers should be allowed to perform transactions.
-        $helperid = $this->session->userdata('userid');
-        if(!$this->User_model->is_trusted_helper($helperid)){
+        $userid = $this->session->userdata('userid');
+        if(!$this->User_model->is_trusted_helper($userid)){
             die("Only people with 'Trusted Helper' level permissions can perform transactions");
         }
         
-		$kids = $this->User_model->get_user_by_type(TYPE_CHILD);
+		$kids = $this->user_model->get_user_by_type(TYPE_CHILD);
 		$users = array(
-					"fname" => "default first name";
-					"lname" => "default last name";
+					'fname' => 'default first name';
+					'lname' => 'default last name';
 					);
 	
-		foreach($kids->result_array() as $kid){
+		foreach($kids as $kid){
 			$users['fname'] = $kid->fName;
 			$users['lname'] = $item->lName;
 		}
 		endforeach;
 
-		$items = $this->Inventory_model->get_all_items;
+		$items = $this->item_model->get_all_items;
 		$listitems = array(
-					"itemNumber" => -1;
-					"purchaseLocation" => "default location";
-					"realCost" => -1;
-					"pointCost" => -1;
-					"description" => "default description";
-				    "quantity" => -1;
+					'itemNumber' => -1;
+					'purchaseLocation' => 'default location';
+					'realCost' => -1;
+					'pointCost' => -1;
+					'description' => 'default description';
+				    'quantity' => -1;
 					);
 
-		foreach($items->result_array() as $item){
+		foreach($items as $item){
 			$listitems['image'] = $item->supplierURL;
 			$listitems['quantity'] = $item->qty;
 			$listitems['itemNum'] = $item->id;

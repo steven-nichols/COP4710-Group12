@@ -1,16 +1,16 @@
 <?php
 
-class Inventory_controller extends CI_Controller {
+class currentInventory extends CI_Controller {
     
     function __construct()
     {
         parent::__construct();
 
-        $this->load->model->('Inventory_model');
+        $this->load->model->('Item_model');
 		$this->load->model->('User_model');
  		$this->load->helper(array('form'));
 		$this->load->library->session();
-    
+    }
 
 	function index()
 	{
@@ -21,20 +21,20 @@ class Inventory_controller extends CI_Controller {
             exit();
         }
 
-		$userData = $this->User_model->get_user_data($userid);
-		$userImage = $userData->'picName';
+		$userData = $this->user_model->get_user_data($userid);
+		$userImage = $userData['picName'];
 		
-		$items = $this->Inventory_model->get_all_items;
+		$items = $this->item_model->get_all_items(1);
 		$listitems = array(
-					"itemNumber" => -1;
-					"purchaseLocation" => "default location";
-					"realCost" => -1;
-					"pointCost" => -1;
-					"description" => "default description";
-				    "quantity" => -1;
+					'itemNumber' => -1;
+					'purchaseLocation' => 'default location';
+					'realCost' => -1;
+					'pointCost' => -1;
+					'description' => 'default description';
+				    'quantity' => -1;
 					);
 
-		foreach($items->result_array() as $item){
+		foreach($items as $item){
 			$listitems['itemNumber'] = $item->id;
 			$listitems['purchaseLocation'] = $item->supplierURL;
 			$listitems['realCost'] = $item->realCost;
@@ -44,7 +44,7 @@ class Inventory_controller extends CI_Controller {
 		}
 		endforeach;
 
-		$this->load->view->Inventory_view(array($userImage, $listitems));
+		$this->load->view->inventory(array($userImage, $listitems));
 	}
 }
 ?>
