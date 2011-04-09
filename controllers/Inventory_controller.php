@@ -27,20 +27,20 @@ class Inventory_controller extends CI_Controller {
 		$items = $this->Inventory_model->get_all_items;
 		$listitems = array(
 					"itemNumber" => -1;
-					"purchaseLocation" => "";
+					"purchaseLocation" => "default location";
 					"realCost" => -1;
 					"pointCost" => -1;
-					"description" => "";
-				        "quantity" => -1;
+					"description" => "default description";
+				    "quantity" => -1;
 					);
 
-		foreach($items->result() as $item){
-			$listitems->itemNumber = item->id;
-			$listitems->purchaseLocation = item->supplierURL;
-			$listitems->realCost = item->realCost;
-			$listitems->pointCost = item->pointCost;
-			$listitems->description = item->description;
-			$listitems->quantity = item->qty;
+		foreach($items->result_array() as $item){
+			$listitems['itemNumber'] = $item->id;
+			$listitems['purchaseLocation'] = $item->supplierURL;
+			$listitems['realCost'] = $item->realCost;
+			$listitems['pointCost'] = $item->pointCost;
+			$listitems['description'] = $item->description;
+			$listitems['quantity'] = $item->qty;
 		}
 		endforeach;
 

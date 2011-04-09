@@ -23,6 +23,38 @@ class order extends CI_Controller {
         if(!$this->User_model->is_trusted_helper($helperid)){
             die("Only people with 'Trusted Helper' level permissions can perform transactions");
         }
-        $this->load->view('shoppingCart');
+        
+		$kids = $this->User_model->get_user_by_type(TYPE_CHILD);
+		$users = array(
+					"fname" => "default first name";
+					"lname" => "default last name";
+					);
+	
+		foreach($kids->result_array() as $kid){
+			$users['fname'] = $kid->fName;
+			$users['lname'] = $item->lName;
+		}
+		endforeach;
+
+		$items = $this->Inventory_model->get_all_items;
+		$listitems = array(
+					"itemNumber" => -1;
+					"purchaseLocation" => "default location";
+					"realCost" => -1;
+					"pointCost" => -1;
+					"description" => "default description";
+				    "quantity" => -1;
+					);
+
+		foreach($items->result_array() as $item){
+			$listitems['image'] = $item->supplierURL;
+			$listitems['quantity'] = $item->qty;
+			$listitems['itemNum'] = $item->id;
+			$listitems['cost'] = $item->pointCost;
+			$listitems['descrp'] = $item->description;
+		}
+		endforeach;
+
+		$this->load->view('shoppingCart', array($users, $listitems));
 	}
 }
