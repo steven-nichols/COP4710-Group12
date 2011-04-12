@@ -28,7 +28,7 @@ class order extends CI_Controller {
 		$kids = $this->User_model->get_user_by_type('child');
 
 		$num_items = $this->Item_model->get_item_count(1);
-                $items = $this->Item_model->get_all_items(0,$num_items,1);
+                $items = $this->Item_model->get_item_range(0,$num_items,1);
 		
                 $data = array(
                                         "users" => $kids,
