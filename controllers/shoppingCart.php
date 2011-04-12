@@ -6,6 +6,7 @@ class order extends CI_Controller {
 	{
 		parent::__construct();
         $this->load->model('User_model');
+        $this->load->model('Item_model');
         $this->load->library('session');
         $this->load->helper(array('url', 'form'));
 	}
