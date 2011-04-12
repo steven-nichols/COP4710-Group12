@@ -17,10 +17,6 @@
 <tr>
 
 <td>
-<?php include("menu.php"); ?>
-</td>
-
-<td>
 <h1>Register</h1>
 
 <?php echo form_open(''); ?>
