@@ -2,7 +2,7 @@
 if(isset($picture))
     echo $picture;
 else
-    echo "/home/dbproject/CodeIgniter/pictures/users/defaultuser.jpg";
+    echo "defaultuser.jpg";
 ?>" height="256" width="256" /> <br>
 
 <?php
