@@ -24,7 +24,7 @@ class order extends CI_Controller {
             die("Only people with 'Trusted Helper' level permissions can perform transactions");
         }
         
-		$kids = $this->user_model->get_user_by_type(TYPE_CHILD);
+		$kids = $this->User_model->get_user_by_type(TYPE_CHILD);
 		$users = array(
 					'fname' => 'default first name';
 					'lname' => 'default last name';
