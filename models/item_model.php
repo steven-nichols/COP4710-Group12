@@ -108,29 +108,6 @@ class Item_model extends CI_Model {
 
         return null;
     }
-
-	/**
-	* Returns items table, sorted by itemID.
-	* \param $notavail Boolean indicating if we should return unavailable 
-    *        items.  Assumed FALSE if omitted.
-	* \return The table in array format, null on failure.
-	*/
-	function get_all_items($notavail=0)
-	{
-		if($notavail){
-			$sql = "SELECT * FROM `items` ORDER BY `itemID`";
-		}
-		else{
-			$sql = 	"SELECT * FROM `items` WHERE `available` = 1 ORDER BY `itemID`";
-		$query = $this->db->query($sql);
-
-		if($query->num_rows() > 0){
-			return $query->result_array();
-		}
-		else{		
-			return null;
-		}
-	}
     
     /**
      * Add a new item to the database.
