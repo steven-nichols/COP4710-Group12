@@ -41,7 +41,7 @@ class currentInventory extends CI_Controller {
 		}
 		endforeach;
 
-		$this->load->view->inventory(array($userImage, $listitems));
+		$this->load->view->('inventory', $listitems);
 	}
 }
 ?>
