@@ -20,9 +20,6 @@ class currentInventory extends CI_Controller {
             redirect('/login');
             exit();
         }
-
-		$userData = $this->user_model->get_user_data($userid);
-		$userImage = $userData['picName'];
 		
 		$items = $this->item_model->get_all_items(1);
 		$listitems = array(
