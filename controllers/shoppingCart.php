@@ -36,7 +36,7 @@ class order extends CI_Controller {
 		}
 		endforeach;
 
-		$items = $this->item_model->get_all_items;
+		$items = $this->Item_model->get_all_items(1);
 		$listitems = array(
 					'itemNumber' => -1;
 					'purchaseLocation' => 'default location';
