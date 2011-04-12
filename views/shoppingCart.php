@@ -15,13 +15,21 @@ function addItem(itemNum, cost, descrp)
    var tempStr = "<tr id=\"item" + itemCount + "\">";
 	 tempStr += "<td id=\"itemNumber" + itemCount + "\">" + itemNum + "</td>";
 	 tempStr += "<td id=\"quantity" + itemCount + "\">" + quantity + "</td>";
-	 tempStr += "<td id=\"cost" + itemCount + "\">" + cost + "</td>"
-	 tempStr += "<td id=\"description" + itemCount + "\">" + descrp + "</td>"
-	 tempStr += "</tr>"
+	 tempStr += "<td id=\"cost" + itemCount + "\">" + cost + "</td>";
+	 tempStr += "<td id=\"description" + itemCount + "\">" + descrp + "</td>";
+	 
+	 //This is an update to allow the data to be accessed by the PHP
+	 //Hidden fields are generated with the appropriate data
+	 tempStr += "<input type=\"hidden\" name=\"HitemNumber" + itemCount + "\" value=\"" + itemNum + "\"></input>";
+	 tempStr += "<input type=\"hidden\" name=\"Hquantity" + itemCount + "\" value=\"" + quantity + "\"></input>";
+	 tempStr += "<input type=\"hidden\" name=\"Hcost" + itemCount + "\" value=\"" + cost + "\"></input>";
+	 tempStr += "<input type=\"hidden\" name=\"Hdescription" + itemCount + "\" value=\"" + descrp + "\"></input>";
+	 tempStr += "</tr>";
 	 
    document.getElementById("itemList").innerHTML += tempStr;
 	 
 	 itemCount++;
+	 document.getElementById("itemsTotal").value = itemCount;
 	 
 	 updateTotal();
 }
@@ -52,6 +60,8 @@ function updateTotal()
 <td>
 
 <?php echo form_open('shoppingCart'); ?>
+
+<input type="hidden" name="itemsTotal" id="itemsTotal" value="0"></input>
 
 Select Buyer:
 <select>
