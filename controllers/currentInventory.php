@@ -8,7 +8,7 @@ class currentInventory extends CI_Controller {
 
         $this->load->model->('Item_model');
  		$this->load->helper(array('form'));
-		$this->load->library->session();
+		$this->load->library('session');
     }
 
 	function index()
