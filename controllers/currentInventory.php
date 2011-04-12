@@ -22,10 +22,10 @@ class currentInventory extends CI_Controller {
 		$num_items = $this->Item_model->get_item_count(1);
                 $items = $this->Item_model->get_all_items(0,$num_items,1);
                 $data = array(
-                                         "listitems" => $items
+                         "listitems" => $items
                 );
 
-		$this->load->view->('inventory', $listitems);*/
+		$this->load->view->('inventory', $listitems);
     }
 }
 ?>
