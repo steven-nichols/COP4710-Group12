@@ -47,12 +47,12 @@
 	 foreach($listitems as $listitem):
 	    echo '<tr>';
 			
-			echo '<td id="itemNumber' . itemTotal . '">' . $listitem->itemNumber . '</td>';
-			echo '<td id="purchaseLocation' . itemTotal . '">' . $listitem->purchaseLocation . '</td>';
-			echo '<td id="realCost' . itemTotal . '">' . $listitem->realCost . '</td>';
-			echo '<td id="cost' . itemTotal . '">' . $listitem->pointCost . '</td>';
+			echo '<td id="itemNumber' . itemTotal . '">' . $listitem->partno . '</td>';
+			echo '<td id="purchaseLocation' . itemTotal . '">' . $listitem->supplierurl . '</td>';
+			echo '<td id="realCost' . itemTotal . '">' . $listitem->realcost . '</td>';
+			echo '<td id="cost' . itemTotal . '">' . $listitem->pointcost . '</td>';
 			echo '<td id="description' . itemTotal . '">' . $listitem->description . '</td>';
-			echo '<td id="quantity' . itemTotal . '">' . $listitem->quantity . '</td>';
+			echo '<td id="quantity' . itemTotal . '">' . $listitem->qty . '</td>';
 			
 			echo '</tr>';
 			
