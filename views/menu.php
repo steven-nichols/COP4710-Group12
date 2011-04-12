@@ -2,7 +2,7 @@
 if(isset($picture))
     echo $picture;
 else
-    echo "/views/defaultuser.jpg";
+    echo "/home/dbproject/COP4710-Group12/views/defaultuser.jpg";
 ?>" height="256" width="256" /> <br>
 
 <?php
