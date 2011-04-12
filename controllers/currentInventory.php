@@ -21,24 +21,9 @@ class currentInventory extends CI_Controller {
         }
 		$num_items = $this->Item_model->get_item_count(1);
                 $items = $this->Item_model->get_all_items(0,$num_items,1);
-		$listitems = array(
-					'itemNumber' => -1;
-					'purchaseLocation' => 'default location';
-					'realCost' => -1;
-					'pointCost' => -1;
-					'description' => 'default description';
-				    'quantity' => -1;
-					);
-
-		foreach($items as $item){
-			$listitems['itemNumber'] = $item->id;
-			$listitems['purchaseLocation'] = $item->supplierURL;
-			$listitems['realCost'] = $item->realCost;
-			$listitems['pointCost'] = $item->pointCost;
-			$listitems['description'] = $item->description;
-			$listitems['quantity'] = $item->qty;
-		}
-		endforeach;
+                $data = array(
+                                         "listitems" => $items
+                );
 
 		$this->load->view->('inventory', $listitems);*/
     }
