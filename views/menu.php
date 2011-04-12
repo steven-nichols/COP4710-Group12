@@ -2,7 +2,7 @@
 if(isset($picture))
     echo $picture;
 else
-    echo "/pictures/users/defaultuser.jpg";
+    echo "/views/defaultuser.jpg";
 ?>" height="256" width="256" /> <br>
 
 <?php
