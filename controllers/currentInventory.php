@@ -6,9 +6,9 @@ class currentInventory extends CI_Controller {
     {
         parent::__construct();
 
-        $this->load->model->('Item_model');
- 		$this->load->helper(array('form'));
-		$this->load->library('session');
+        $this->load->model('Item_model');
+        $this->load->library('session');
+        $this->load->helper(array('url', 'form'));
     }
 
 	function index()
