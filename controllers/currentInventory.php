@@ -20,8 +20,8 @@ class currentInventory extends CI_Controller {
             redirect('/login');
             exit();
         }
-		
-		$items = $this->item_model->get_all_items(1);
+		$this->load->view('inventory');
+		/*$items = $this->item_model->get_all_items(1);
 		$listitems = array(
 					'itemNumber' => -1;
 					'purchaseLocation' => 'default location';
@@ -41,7 +41,7 @@ class currentInventory extends CI_Controller {
 		}
 		endforeach;
 
-		$this->load->view->('inventory', $listitems);
-	}
+		$this->load->view->('inventory', $listitems);*/
+    }
 }
 ?>
