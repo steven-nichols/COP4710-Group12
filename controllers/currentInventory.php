@@ -19,8 +19,8 @@ class currentInventory extends CI_Controller {
             redirect('/login');
             exit();
         }
-		
-                $items = $this->Item_model->get_all_items(1);
+		$num_items = $this->Item_model->get_item_count(1);
+                $items = $this->Item_model->get_all_items(0,$num_items,1);
 		$listitems = array(
 					'itemNumber' => -1;
 					'purchaseLocation' => 'default location';
