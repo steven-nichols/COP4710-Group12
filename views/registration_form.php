@@ -3,6 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<title>Welcome to CodeIgniter</title>
+
+<?php echo anchor('welcome', 'Cancel') . '<br>';?>
+
 <script language="JavaScript" src="<?php echo base_url(); ?>javascript/CalendarPopup.js"></script>
     <script language="JavaScript" id="js1">
         var cal = new CalendarPopup();
