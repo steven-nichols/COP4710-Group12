@@ -25,7 +25,7 @@ class currentInventory extends CI_Controller {
                          "listitems" => $items
                 );
 
-		$this->load->view->('inventory', $data);
+		$this->load->view('inventory', $data);
     }
 }
 ?>
