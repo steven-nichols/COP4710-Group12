@@ -2,7 +2,7 @@
 if(isset($picture))
     echo $picture;
 else
-    echo "/home/dbproject/COP4710-Group12/views/defaultuser.jpg";
+    echo "http://www.makefive.com/media/images/placeholder/default_user.jpg";
 ?>" height="256" width="256" /> <br>
 
 <?php
