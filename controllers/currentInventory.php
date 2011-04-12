@@ -7,7 +7,6 @@ class currentInventory extends CI_Controller {
         parent::__construct();
 
         $this->load->model->('Item_model');
-		$this->load->model->('User_model');
  		$this->load->helper(array('form'));
 		$this->load->library->session();
     }
@@ -20,8 +19,8 @@ class currentInventory extends CI_Controller {
             redirect('/login');
             exit();
         }
-		$this->load->view('inventory');
-		/*$items = $this->item_model->get_all_items(1);
+		
+                $items = $this->Item_model->get_all_items(1);
 		$listitems = array(
 					'itemNumber' => -1;
 					'purchaseLocation' => 'default location';
