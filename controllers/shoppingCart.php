@@ -30,8 +30,8 @@ class order extends CI_Controller {
                 $items = $this->Item_model->get_all_items(0,$num_items,1);
 		
                 $data = array(
-                                        "users" => $kids;
-					"listitems" => $items;
+                                        "users" => $kids,
+					"listitems" => $items
 					);
 
 		$this->load->view('shoppingCart', $data);
