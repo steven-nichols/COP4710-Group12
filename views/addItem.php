@@ -72,11 +72,7 @@ if($colNum == 4)
 //The onClick is what adds items to the invoice list
 //The format is addItem(itemNumber, cost, description) the quantity is obtained via prompt
 echo '<td><center><img src="';
-if(file_exists($img_path.$listitem->picture))
-    echo $img_path.$listitem->picture;
-else 
-    echo $img_path."default_image.gif";
-
+echo $img_path.$listitem->picture;
 echo '" height="128" width="128" onClick="modifyItem(' . $curItem . ')"/><br>' . $listitem->qty . '</center></td>';
 $colNum++;
 

@@ -66,7 +66,7 @@ class Item extends CI_Controller {
             $items = $this->item_model->get_item_range(0, $total_items);
             $data = array(
                 "listitems" => $items,
-                "img_path" => base_url()."images/"
+                "img_path" => base_url()."pictures/items/"
             );
             $this->load->view('addItem', $data);
         }
