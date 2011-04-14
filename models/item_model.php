@@ -76,8 +76,8 @@ class Item_model extends CI_Model {
         }
         
         $query = $this->db->query($sql);
-        
-        return $query->row_array();
+        $result = $query->row_array(); 
+        return (int)$result['COUNT(*)'];
     }
     
     /**
@@ -104,7 +104,7 @@ class Item_model extends CI_Model {
         $query = $this->db->query($sql, array($start=0, $count=30));
 
         if($query->num_rows > 0)
-        return $query->result_array();
+        return $query->result();
 
         return null;
     }
