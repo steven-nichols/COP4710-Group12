@@ -10,7 +10,7 @@ echo anchor('login/logout', 'Log out') . '<br>';
 echo anchor('account', 'View/Modify Profile') . '<br>';
 echo anchor('history', 'View History') . '<br>';
 echo anchor('shoppingCart', 'Shopping Cart') . '<br>';
-echo anchor('item/add', 'Add/Modify Item') . '<br>';
+echo anchor('item', 'Add/Modify Item') . '<br>';
 echo anchor('transaction', 'View Transaction History') . '<br>';
 echo anchor('transaction/date', 'View History of Transactions for a Date Range') . '<br>';
 echo anchor('currentInventory', 'View Current Inventory') . '<br>'; 

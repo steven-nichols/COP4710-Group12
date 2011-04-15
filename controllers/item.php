@@ -13,7 +13,13 @@ class Item extends CI_Controller {
     }
 
     function index(){
-       $this->add();
+        $total_items = $this->item_model->get_item_count(1);
+        $items = $this->item_model->get_item_range(0, $total_items);
+        $data = array(
+            "listitems" => $items,
+            "img_path" => base_url()."pictures/items/"
+        );
+        $this->load->view('item_select', $data);
     }
 
     /*
@@ -31,26 +37,27 @@ class Item extends CI_Controller {
         $helperid = $this->session->userdata('userid');
         if(!$this->User_model->is_trusted_helper($helperid)){
             die("Only people with 'Trusted Helper' level permissions can add ".
-                "or modify accounts");
+                "or modify items");
         }      
 
 
         $this->load->library('form_validation');
 
-        $this->form_validation->set_error_delimiters('
-            <tr>
-            <td></td>
-            <td class="error">','</td>
-            </tr>');
+        $this->form_validation->set_error_delimiters('<div class="error">','</div>');
 
         $config = array(
+             array(
+                'field' => 'picture',
+                'label' => 'Item Picture',
+                'rules' => 'required'
+            ),
             array(
-                'field' => 'realcost',
+                'field' => 'realCost',
                 'label' => 'Real Cost',
                 'rules' => 'required'
             ),
             array(
-                'field' => 'pointcost',
+                'field' => 'pointCost',
                 'label' => 'Point Cost',
                 'rules' => 'required'
             )
@@ -62,11 +69,9 @@ class Item extends CI_Controller {
         if($this->form_validation->run() == FALSE)
         {
             // Add a new
-            $total_items = $this->item_model->get_item_count(1);
-            $items = $this->item_model->get_item_range(0, $total_items);
             $data = array(
-                "listitems" => $items,
-                "img_path" => base_url()."pictures/items/"
+                "title" => "Add New Item",
+                "picture" => $this->session->userdata['picture']
             );
             $this->load->view('addItem', $data);
         }
@@ -81,11 +86,13 @@ class Item extends CI_Controller {
             $available = (bool)$this->input->post('available');
             $realcost = $this->input->post('realCost', TRUE);
             $pointcost = $this->input->post('pointCost', TRUE);
+            $picture = $this->input->post('picture', TRUE);
             $qty = $this->input->post('quantity', TRUE);
 
             // Attempt to add the new user to the database
-            $success = $this->item_model->add_item($description, $supplier, $url, $partno, $type, 
-        $available, $realcost, $pointcost, $qty, $minqty, $picture);
+            $success = $this->item_model->add_item($description, $supplier,
+                $url, $partno, $type, $available, $realcost, $pointcost,
+                $qty, $minqty, $picture);
 
             if($success)
             {
@@ -93,7 +100,7 @@ class Item extends CI_Controller {
             }
             else
             {
-                echo "An error occured when trying to add/modify the account.";
+                echo "An error occured when trying to add the item.";
             }
         }
     }
@@ -104,7 +111,7 @@ class Item extends CI_Controller {
      * NOTE: The userid of the user to be modified must be passed as a POST variable 
      * called 'userid'.
      */
-    function modify(){
+    function modify($itemid){
         // Make sure person is logged in
         $logged_in = $this->session->userdata('logged_in');
         if(!$logged_in){
@@ -116,11 +123,9 @@ class Item extends CI_Controller {
         if(!$this->User_model->is_trusted_helper($helperid)){
             die("Only people with 'Trusted Helper' level permissions can add ".
                 "or modify accounts");
-        }      
-        
-        $itemid = $this->input->post('itemID');
-        $redirect = $this->input->post('redirect');
+        } 
 
+        
         $this->load->library('form_validation');
 
         $this->form_validation->set_error_delimiters('
@@ -129,34 +134,33 @@ class Item extends CI_Controller {
             <td class="error">','</td>
             </tr>');
 
-        // Do not force the user to update their password
         $config = array(
             array(
-                'field' => 'first_name',
-                'label' => 'First Name',
-                'rules' => 'required|trim|strip_tags|max_length[50]'
-            ),
-            array(
-                'field' => 'last_name',
-                'label' => 'Last Name',
-                'rules' => 'trim|strip_tags|max_length[50]'
-            ),
-            array(
-                'field' => 'birthdate',
-                'label' => 'Birthdate',
-                'rules' => 'trim|callback_valid_date'
+                'field' => 'modificationDescription',
+                'label' => 'Modification Description',
+                'rules' => 'required'
             )
         );
         $this->form_validation->set_rules($config);
 
 
         // First run or there were errors with the form
-        if($redirect || $this->form_validation->run() == FALSE)
+        if($this->form_validation->run() == FALSE)
         {
             // pull user information from database
-            $data = $this->User_model->get_user_data($userid);
-            $data['birthdate'] = $this->User_model->us_date($data['birthdate']);
-            $this->load->view('registration_form', $data);
+            $item = $this->item_model->get_item_by_id($itemid);
+            $item_types = $this->item_model->get_item_types();
+            $mod_types = $this->item_model->get_mod_types();
+
+            $data = array(
+                "title" => "Modify Item",
+                "picture" => $this->session->userdata['picture'],
+                "item" => $item,
+                "itemtypes" => $item_types,
+                "modtypes" => $mod_types
+            );
+
+            $this->load->view('addItem', $data);
         }
         else // Form validation passed 
         {
@@ -170,12 +174,13 @@ class Item extends CI_Controller {
             $realcost = $this->input->post('realCost', TRUE);
             $pointcost = $this->input->post('pointCost', TRUE);
             $qty = $this->input->post('quantity', TRUE);
-            $modreason = $this->input->post('txtModificationReason', TRUE);
-            $moddesc = $this->input->post('txtModificationDescription', TRUE);
+            $picture = $this->input->post('picture', TRUE);
+            $modreason = $this->input->post('modificationReason', TRUE);
+            $moddesc = $this->input->post('modificationDescription', TRUE);
         
-            $success = $this->item_model->modify_item((int)$itemid, 
+            $success = $this->item_model->modify_item($itemid, 
                 $description, $supplier, $url, $partno, $type, $available, 
-                $realcost, $pointcost, $minqty, $picture);
+                $realcost, $pointcost, $qty, $minqty, $picture);
         
 
             if($success)
@@ -184,7 +189,7 @@ class Item extends CI_Controller {
             }
             else
             {
-                echo "An error occured when trying to add/modify the account.";
+                echo "An error occured when trying to modify the item.";
             }
         }
     }

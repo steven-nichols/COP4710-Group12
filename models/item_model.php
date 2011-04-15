@@ -10,6 +10,49 @@ class Item_model extends CI_Model {
         parent::__construct();
 
         $this->load->database();
+        $this->load->helper('select_helper');
+    }
+
+    function get_item_types(){
+        $sql = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+                WHERE TABLE_NAME = 'items'
+                AND COLUMN_NAME = 'type'";
+        
+        $query = $this->db->query($sql);
+
+        if($query->num_rows == 1){
+            $str = $query->row()->COLUMN_TYPE;
+            // Remove the leading "enum(" and the trailing ")"
+            $str = substr($str, 5, -1);
+            // Remove single quoates
+            $str = str_replace("'", "", $str);
+
+            $types = explode(',', $str);
+            return $types;
+        }
+        else
+            return null;
+    }
+
+    function get_mod_types(){
+        $sql = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+                WHERE TABLE_NAME = 'manualAdj'
+                AND COLUMN_NAME = 'reason'";
+        
+        $query = $this->db->query($sql);
+
+        if($query->num_rows == 1){
+            $str = $query->row()->COLUMN_TYPE;
+            // Remove the leading "enum(" and the trailing ")"
+            $str = substr($str, 5, -1);
+            // Remove single quoates
+            $str = str_replace("'", "", $str);
+
+            $types = explode(',', $str);
+            return $types;
+        }
+        else
+            return null;
     }
 
     /**
@@ -23,7 +66,7 @@ class Item_model extends CI_Model {
     function get_item_by_id($itemID)
     {
         $sql = "SELECT * FROM `items` WHERE `itemID` = ? LIMIT 1";
-        $query = $this->db->query($sql, array($itemId));
+        $query = $this->db->query($sql, array($itemID));
 
         if($query->num_rows == 1)
             return $query->row_array();
@@ -168,17 +211,17 @@ class Item_model extends CI_Model {
      * \return TRUE/FALSE on success/failure
      */
     function modify_item($itemID, $description, $supplier, $url, $partno, 
-        $type, $available, $realcost, $pointcost, $minqty, $picture=
+        $type, $available, $realcost, $pointcost, $qty, $minqty, $picture=
         'defaultitem.jpg')
     {
         $sql = "UPDATE `items` SET `description` = ?, `supplier` = ?, 
             `supplierurl` = ?, `partno` = ?, `type` = ?, `available` = ?, 
-            `picture` = ?, `realcost` = ?', `pointcost` = ?, `qty` = ?, 
+            `picture` = ?, `realcost` = ?, `pointcost` = ?, `qty` = ?, 
             `minqty` = ? WHERE `itemID` = ?;";
         
         return $this->db->query($sql, array($description, $supplier, $url, 
             $partno, $type, $available, $picture, $realcost, $pointcost, 
-            $minqty, $itemID));
+            $qty, $minqty, $itemID));
     }
     
     /**
