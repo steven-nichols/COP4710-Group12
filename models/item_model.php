@@ -240,6 +240,10 @@ class Item_model extends CI_Model {
         return $this->db->query($sql, array($qty, $itemID));   
     }
 
-
+    function record_manual_adjustment($userid, $itemid, $description, $reason){
+        $sql = "INSERT INTO `manualAdj` (userID, itemID, date, description, reason)
+            VALUES (?, ?, CURDATE(), ?, ?)";
+        $this->db->query($sql, array($userid, $itemid, $description, $reason));
+    }
 }
 ?>
