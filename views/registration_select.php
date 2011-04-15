@@ -1,8 +1,12 @@
 <html>
 <head>
+<link rel='stylesheet' type='text/css' media='all' href='<?php echo base_url().'css/style.css'; ?>' />
 </head>
 <body>
+<?php include("header.php"); ?>
+<?php include("menu.php"); ?>
 
+<div id="content">
 <h1>Add/Modify Users</h1>
 
 <?php echo anchor('welcome', 'Cancel') . '<br>';?>
@@ -33,6 +37,9 @@ know not to run validation immediately. //-->
 <input type="submit" value="Modify"/>
 </p>
 <?php echo form_close(); ?>
+</div>
+
+<?php include("footer.php"); ?>
 
 </body>
 </html>

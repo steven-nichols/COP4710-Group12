@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>Welcome to CodeIgniter</title>
 
-<?php echo anchor('welcome', 'Cancel') . '<br>';?>
+    <link rel='stylesheet' type='text/css' media='all' href='<?php echo base_url().'css/style.css'; ?>' />
 
 <script language="JavaScript" src="<?php echo base_url(); ?>javascript/CalendarPopup.js"></script>
     <script language="JavaScript" id="js1">
@@ -12,11 +12,10 @@
     </script>
 </head>
 <body>
+<?php include("header.php"); ?>
+<?php include("menu.php"); ?>
 
-<table summary="">
-<tr>
-
-<td>
+<div id="content">
 <h1>Register</h1>
 
 <?php echo form_open(''); ?>
@@ -127,7 +126,8 @@ if( (!isset($userID)) || (isset($userID) && $active) )
 <input type="submit" value="Submit" />
 
 </form>
-</td>
-</table>
+</div>
+
+<?php include("footer.php"); ?>
 </body>
 </html>

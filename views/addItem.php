@@ -2,25 +2,13 @@
 <html>
 <head>
 <title><?php echo $title; ?></title>
-<style>
-div.error {
-    color: #D8000C;
-    background-color: #FFBABA;
-    border: 1px solid #d8000c;
-    margin:4px;
-    padding:4px;
-}
-</style>
+<link rel='stylesheet' type='text/css' media='all' href='<?php echo base_url().'css/style.css'; ?>' />
 </head>
 <body>
-<table summary="">
-<tr>
-
-<td>
+<?php include("header.php"); ?>
 <?php include("menu.php"); ?>
-</td>
 
-<td>
+<div id="content">
 <h1><?php echo $title; ?></h1>
 
 <?php echo form_open(); ?>
@@ -120,9 +108,9 @@ foreach($modtypes as $modtype){
 </table>
 
 </form>
-</td>
 
-</tr>
-</table>
+</div>
+
+<?php include("footer.php"); ?>
 </body>
 </html>

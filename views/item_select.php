@@ -1,5 +1,6 @@
 <html>
 <head>
+<link rel='stylesheet' type='text/css' media='all' href='<?php echo base_url().'css/style.css'; ?>' />
 <script language="JavaScript" type="text/javascript">
 
 var itemCount = 0;
@@ -36,17 +37,10 @@ function addItem(itemNum)
 
 </head>
 <body>
-
-
-<table summary="">
-<tr>
-
-<td>
+<?php include("header.php"); ?>
 <?php include("menu.php"); ?>
-</td>
 
-<td>
-
+<div id="content">
 <h1>Add/Modify Items</h1>
 
 
@@ -107,9 +101,8 @@ $curItem++;
 </tr>
 </table>
 
+</div>
 
-
-</td>
-</table>
+<?php include("footer.php"); ?>
 </body>
 </html>
