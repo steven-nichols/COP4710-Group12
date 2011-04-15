@@ -16,6 +16,7 @@ class Item extends CI_Controller {
         $total_items = $this->item_model->get_item_count(1);
         $items = $this->item_model->get_item_range(0, $total_items);
         $data = array(
+            "picture" => $this->session->userdata['picture'],
             "listitems" => $items,
             "img_path" => base_url()."pictures/items/"
         );
@@ -69,9 +70,15 @@ class Item extends CI_Controller {
         if($this->form_validation->run() == FALSE)
         {
             // Add a new
+            $item_types = $this->item_model->get_item_types();
+            $mod_types = $this->item_model->get_mod_types();
+
             $data = array(
                 "title" => "Add New Item",
-                "picture" => $this->session->userdata['picture']
+                "picture" => $this->session->userdata['picture'],
+                "itemtypes" => $item_types,
+                "modtypes" => $mod_types
+
             );
             $this->load->view('addItem', $data);
         }
@@ -217,6 +224,7 @@ class Item extends CI_Controller {
         $items = $this->Item_model->get_item_range(0,$num_items,1);
 
         $data = array(
+            "picture" => $this->session->userdata['picture'],
             "listitems" => $items
         );
 

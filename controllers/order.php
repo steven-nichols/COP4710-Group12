@@ -31,6 +31,7 @@ class order extends CI_Controller {
         $items = $this->Item_model->get_item_range(0,$num_items,1);
 
         $data = array(
+            "picture" => $this->session->userdata['picture'],
             "users" => $kids,
             "listitems" => $items
         );
@@ -60,6 +61,7 @@ class order extends CI_Controller {
             $totalcost += $items[$i]['pointCost'] * $items[$i]['qty'];
         }
         $data = array(
+            "picture" => $this->session->userdata['picture'],
             'userID' => $userid,
             'listitems' => $items,
             'totalcost' => $totalcost

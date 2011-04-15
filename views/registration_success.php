@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta HTTP-EQUIV="REFRESH" content="3; url=<?php echo site_url("account"); ?>">
+<meta HTTP-EQUIV="REFRESH" content="2; url=<?php echo site_url("account"); ?>">
 </head>
 <body>
 

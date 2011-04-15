@@ -23,8 +23,8 @@
 <select name="userid">
 <?php foreach ($users as $user): ?>
 
-<option value="<?php echo $user->userID; ?>">
-<?php echo $user->first_name." ".$user->last_name; ?>
+<option value="<?php echo $user['userID']; ?>">
+<?php echo $user['first_name']." ".$user['last_name']; ?>
 </option>
 
 <?php endforeach; ?>

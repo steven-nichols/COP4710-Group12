@@ -16,6 +16,7 @@ class Account extends CI_Controller {
         $num_users = $this->User_model->get_user_count(1);
         $users = $this->User_model->get_user_range(0,$num_users,1);
         $data = array (
+            "picture" => $this->session->userdata['picture'],
             "users" => $users
         ); 
         $this->load->view('registration_select', $data);
@@ -199,12 +200,7 @@ class Account extends CI_Controller {
 
             if($success)
             {
-                $data = array(
-                    "first_name" => $first_name,
-                    "last_name" => $last_name,
-                    "picture" => $picture
-                );
-                $this->load->view('registration_success', $data);
+                $this->load->view('registration_success');
             }
             else
             {

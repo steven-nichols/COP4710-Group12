@@ -14,8 +14,6 @@
 <?php echo form_open(); ?>
 
 <?php echo validation_errors(); ?>
-<br>
-<br>
 
 <fieldset>
 <legend>Item Details</legend>
