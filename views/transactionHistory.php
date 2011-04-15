@@ -3,27 +3,24 @@
 <head>
 <title>Transaction History</title>
 
+<link rel='stylesheet' type='text/css' media='all' href='<?php echo base_url().'css/style.css'; ?>' />
 </head>
 <body>
-<table summary="">
-<tr>
-
-<td>
+<?php include("header.php"); ?>
 <?php include("menu.php"); ?>
-</td>
 
-<td>
+<div id="content">
 
 <?php echo form_open('transactionHistory'); ?>
 
 Child: 
 <select>
 <?php 
-	 foreach($users as $user):
-	    echo '<option value="' . $user->lname . $user->fname . '">';
-			echo $user->lname . ', ' . $user->fname;
-			echo '</option>';
-	 endforeach;
+foreach($users as $user){
+    echo '<option value="' . $user['userID'] .'">';
+    echo $user['last_name'] . ', ' . $user['first_name'];
+    echo '</option>';
+}
 ?>
 </select>
 
@@ -34,48 +31,47 @@ Child:
 
 
 <?php 
-	 $itemTotal = 0;
-	 foreach($transactions as $transaction):
-	    itemTotal = 0;
-			
-	    echo 'Date: ' . $transaction->date . '<br>';
-			echo '<table summary="" border="1" id="itemList">';
-			
-			echo '<tr>';
-			
-			echo '<td>Item#</td>';
-			echo '<td>Point Cost</td>';
-			echo '<td>Quantity</td>';
-			echo '<td>Description</td>';
-			
-			echo '</tr>';
-			
-	    foreach($transaction->items as $item):
-			   echo '<tr>';
-				 
-				 echo '<td id="itemNumber' . itemTotal . '">' . $listitem->itemNumber . '</td>';
-				 echo '<td id="purchaseLocation' . itemTotal . '">' . $listitem->purchaseLocation . '</td>';
-			   echo '<td id="realCost' . itemTotal . '">' . $listitem->realCost . '</td>';
-			   echo '<td id="cost' . itemTotal . '">' . $listitem->pointCost . '</td>';
-			   echo '<td id="description' . itemTotal . '">' . $listitem->description . '</td>';
-			   echo '<td id="quantity' . itemTotal . '">' . $listitem->quantity . '</td>';
-				 
-				 echo '</tr>';
-				 
-				 itemTotal++;
-			endforeach;
-			
-			echo '</table><br>';
-			echo '<br>';
-			echo '<hr>';
-			echo '<br>';
-	 endforeach;
+$itemTotal = 0;
+foreach($transactions as $transaction){
+    $itemTotal = 0;
+
+    echo 'Date: ' . $transaction->date . '<br>';
+    echo '<table summary="" border="1" id="itemList">';
+
+    echo '<tr>';
+
+    echo '<td>Item#</td>';
+    echo '<td>Point Cost</td>';
+    echo '<td>Quantity</td>';
+    echo '<td>Description</td>';
+
+    echo '</tr>';
+
+    foreach($transaction->items as $item){
+        echo '<tr>';
+
+        echo '<td id="itemNumber' . itemTotal . '">' . $listitem->itemNumber . '</td>';
+        echo '<td id="purchaseLocation' . itemTotal . '">' . $listitem->purchaseLocation . '</td>';
+        echo '<td id="realCost' . itemTotal . '">' . $listitem->realCost . '</td>';
+        echo '<td id="cost' . itemTotal . '">' . $listitem->pointCost . '</td>';
+        echo '<td id="description' . itemTotal . '">' . $listitem->description . '</td>';
+        echo '<td id="quantity' . itemTotal . '">' . $listitem->quantity . '</td>';
+
+        echo '</tr>';
+
+        $itemTotal++;
+    }
+
+    echo '</table><br>';
+    echo '<br>';
+    echo '<hr>';
+    echo '<br>';
+}
 ?>
 
 </form>
-</td>
 
-</tr>
-</table>
+</div>
+<?php include("footer.php"); ?>
 </body>
 </html>
