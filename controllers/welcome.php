@@ -18,6 +18,7 @@ class Welcome extends CI_Controller {
             exit();
         }
         $data = array(
+            "picture" => $this->session->userdata['picture'],
             'first_name' => $this->session->userdata['first_name']
         );
         $this->load->view('home_view', $data);
