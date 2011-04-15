@@ -23,6 +23,7 @@ class inventory extends CI_Controller {
         $items = $this->Item_model->get_item_range(0,$num_items,1);
 
         $data = array(
+            "picture" => $this->session->userdata['picture'],
             "listitems" => $items
         );
 
