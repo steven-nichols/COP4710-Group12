@@ -36,6 +36,7 @@ foreach($transactions as $transaction){
     $itemTotal = 0;
 
     echo 'Date: ' . $transaction->date . '<br>';
+    echo 'Child: ' . $transaction->userID . '<br>';
     echo '<table summary="" border="1" id="itemList">';
 
     echo '<tr>';
@@ -43,19 +44,19 @@ foreach($transactions as $transaction){
     echo '<td>Item#</td>';
     echo '<td>Point Cost</td>';
     echo '<td>Quantity</td>';
-    echo '<td>Description</td>';
+    //echo '<td>Description</td>';
 
     echo '</tr>';
 
     foreach($transaction->items as $item){
         echo '<tr>';
 
-        echo '<td id="itemNumber' . itemTotal . '">' . $listitem->itemNumber . '</td>';
-        echo '<td id="purchaseLocation' . itemTotal . '">' . $listitem->purchaseLocation . '</td>';
-        echo '<td id="realCost' . itemTotal . '">' . $listitem->realCost . '</td>';
-        echo '<td id="cost' . itemTotal . '">' . $listitem->pointCost . '</td>';
-        echo '<td id="description' . itemTotal . '">' . $listitem->description . '</td>';
-        echo '<td id="quantity' . itemTotal . '">' . $listitem->quantity . '</td>';
+        echo '<td id="itemNumber' . $itemTotal . '">' . $item->itemID . '</td>';
+        //echo '<td id="purchaseLocation' . $itemTotal . '">' . $item->purchaseLocation . '</td>';
+        //echo '<td id="realCost' . $itemTotal . '">' . $item->realCost . '</td>';
+        echo '<td id="cost' . $itemTotal . '">' . $item->salePrice . '</td>';
+        //echo '<td id="description' . $itemTotal . '">' . $item->description . '</td>';
+        echo '<td id="quantity' . $itemTotal . '">' . $item->qty . '</td>';
 
         echo '</tr>';
 

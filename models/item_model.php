@@ -281,5 +281,56 @@ class Item_model extends CI_Model {
 
         return $this->db->query($sql, array($itemID, $transID, $price, $qty));
     }
+
+
+    function get_transaction_items($transID)
+    {
+        $sql = "SELECT * FROM `transItems` WHERE transactionID = ?";
+        $query = $this->db->query($sql, array($transID));
+
+        if($query->num_rows > 0)
+            return $query->result();
+
+        return null;
+    }
+
+    function get_transactions()
+    {
+        $sql = "SELECT * FROM `transactions` ORDER BY `date`";
+        $query = $this->db->query($sql);
+
+        if($query->num_rows > 0){
+            foreach ($query->result() as $row){
+                $items = $this->get_transaction_items($row->transactionID);
+                $row->items = $items;
+                print_r($row);
+            }
+            return $query->result();
+        }
+
+        return null;
+    }
+
+    function get_transaction_child($userid)
+    {
+        $sql = "SELECT * FROM `transactions` WHERE userID = ? ORDER BY `date`";
+        $query = $this->db->query($sql, array($userid));
+
+        if($query->num_rows > 0)
+            return $query->result();
+
+        return null;
+    }
+
+    function get_transaction_range($start=0, $count=30)
+    {
+        $sql = "SELECT * FROM `transactions` ORDER BY `itemID` LIMIT ?,  ?";
+        $query = $this->db->query($sql, array($start, $count));
+
+        if($query->num_rows > 0)
+            return $query->result();
+
+        return null;
+    }
 }
 ?>
