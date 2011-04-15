@@ -245,5 +245,41 @@ class Item_model extends CI_Model {
             VALUES (?, ?, CURDATE(), ?, ?)";
         $this->db->query($sql, array($userid, $itemid, $description, $reason));
     }
+
+    /**
+     * Create a new entry in the tranaction table.
+     * Returns the transactionID of the new row
+     */
+    function new_transaction($userID, $numItems, $totalPointCost){
+        // Make sure that this is actually a new transaction
+        $sql = "SELECT transactionID from `transactions` WHERE userID = ? AND 
+            date = CURDATE()";
+        $result = $this->db->query($sql, array($userID));
+        if($result->num_rows != 0){
+            // Get the id of this transaction
+            $transID = $result->row()->transactionID;
+
+            // Update the number of items in the transaction
+            $sql = "UPDATE `transactions` SET totalItems=totalItems+?, 
+                    total=total+? WHERE userID = ? AND date = CURDATE()";
+            $this->db->query($sql, array($numItems, $totalPointCost, $userID));
+
+            // Return the transaction id
+            return $transID;
+        }
+
+        $sql = "INSERT INTO `transactions` (userID, date, totalItems, total)
+            VALUES (?, CURDATE(), ?, ?)";
+
+        $this->db->query($sql, array($userID, $numItems, $totalPointCost));
+        return $this->db->insert_id();
+    }
+
+    function add_trans_item($itemID, $transID, $price, $qty){
+        $sql = "INSERT INTO `transItems` (itemID, transactionID, salePrice, qty)
+            VALUES (?, ?, ?, ?)";
+
+        return $this->db->query($sql, array($itemID, $transID, $price, $qty));
+    }
 }
 ?>

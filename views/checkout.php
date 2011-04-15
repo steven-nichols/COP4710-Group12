@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Checkout</title>
+<link rel='stylesheet' type='text/css' media='all' href='<?php echo base_url().'css/style.css'; ?>' />
 <script language="JavaScript" type="text/javascript">
 var total = 0;
 var itemCount = 1;
@@ -34,16 +35,11 @@ function updateChange()
 
 </head>
 <body>
-<table summary="">
-<tr>
-
-<td>
+<?php include("header.php"); ?>
 <?php include("menu.php"); ?>
-</td>
 
-<td>
-
-<?php echo form_open('checkout'); ?>
+<div id="content">
+<?php echo form_open('order/process'); ?>
 
 Buyer: <?php echo "user for transaction";?>
 
@@ -61,36 +57,36 @@ Buyer: <?php echo "user for transaction";?>
 
 </tr>
 
-<tr id="item0">
-<td id="itemNumber0">12345</td>
-<td id="quantity0">6</td>
-<td id="cost0">2</td>
-<td id="description0">Something cool</td>
-</tr>
-
 <?php
-   $itemTotal = 0;
-	 
-	 foreach($listitems as $listitem):
-	    echo '<tr>';
-			
-			echo '<td id="itemNumber' . itemTotal . '">' . $listitem->itemNumber . '</td>';
-			echo '<td id="quantity' . itemTotal . '">' . $listitem->quantity . '</td>';
-			echo '<td id="cost' . itemTotal . '">' . $listitem->pointCost . '</td>';
-			echo '<td id="description' . itemTotal . '">' . $listitem->description . '</td>';
-			
-			echo '</tr>';
-			
-	    itemTotal++;
-	 endforeach;
-	 
-	 echo '<script type=”text/javascript”>itemCount = ' . itemTotal . ';</script>';
+$itemTotal = 0;
+
+foreach($listitems as $listitem){
+    echo '<tr>';
+
+    echo '<td id="itemNumber' . $itemTotal . '">' . $listitem['itemid'] . '</td>';
+    echo '<td id="quantity' . $itemTotal . '">' . $listitem['qty'] . '</td>';
+    echo '<td id="cost' . $itemTotal . '">' . $listitem['pointCost'] . '</td>';
+    echo '<td id="description' . $itemTotal . '">' . $listitem['description'] . '</td>';
+
+    echo '<input type="hidden" name="itemNumber' . $itemTotal . '" value="' . $listitem['itemid'] . '" />';
+    echo '<input type="hidden" name="quantity' . $itemTotal . '" value="' . $listitem['qty'] . '" />';
+    echo '<input type="hidden" name="cost' . $itemTotal . '" value="' . $listitem['pointCost'] . '" />';
+
+    echo '</tr>';
+
+    $itemTotal++;
+}
+
+echo '<input type="hidden" name="userID" value="'. $userID .'"/>';
+echo '<input type="hidden" name="itemTotal" value="'. $itemTotal .'"/>';
+echo '<input type="hidden" name="totalCost" value="'. $totalcost .'"/>';
+echo '<script type="text/javascript">itemCount = ' . $itemTotal . ';</script>';
 ?>
 
 </table><br>
 <table summary="">
 <tr>
-<td id="totalCost">Total Cost: 0</td>
+<td id="totalCost">Total Cost: <?php echo $totalcost; ?></td>
 </tr>
 <br>
 
@@ -112,9 +108,8 @@ Buyer: <?php echo "user for transaction";?>
 </table>
 
 </form>
-</td>
+</div>
 
-</tr>
-</table>
+<?php include("footer.php"); ?>
 </body>
 </html>

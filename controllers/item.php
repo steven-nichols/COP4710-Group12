@@ -96,6 +96,8 @@ class Item extends CI_Controller {
 
             if($success)
             {
+                $this->item_model->record_manual_adjustment($userid, $itemid,
+                    $moddesc, $modreason);
                 $this->load->view('item_success');
             }
             else
@@ -185,6 +187,9 @@ class Item extends CI_Controller {
 
             if($success)
             {
+                $this->item_model->record_manual_adjustment($helperid, $itemid,
+                    $moddesc, $modreason);
+
                 $this->load->view('item_success');
             }
             else
@@ -192,6 +197,30 @@ class Item extends CI_Controller {
                 echo "An error occured when trying to modify the item.";
             }
         }
+    }
+
+    function inventory(){
+        // Make sure person is logged in
+        $logged_in = $this->session->userdata('logged_in');
+        if(!$logged_in){
+            redirect('/login');
+            exit();
+        }
+        // Only helpers should be allowed to view the inventory
+        $helperid = $this->session->userdata('userid');
+        if(!$this->User_model->is_helper($helperid)){
+            die("Only people with 'Helper' level permissions can view ".
+                "the inventory");
+        } 
+
+        $num_items = $this->Item_model->get_item_count(1);
+        $items = $this->Item_model->get_item_range(0,$num_items,1);
+
+        $data = array(
+            "listitems" => $items
+        );
+
+        $this->load->view('inventory', $data);
     }
 
     /*
@@ -216,7 +245,6 @@ class Item extends CI_Controller {
          } 
         $this->form_validation->set_message('valid_date', 'Please enter date in mm/dd/yyyy format');
         return false;
-
     } 
 }
 ?>

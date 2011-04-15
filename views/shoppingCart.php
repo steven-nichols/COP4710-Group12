@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Shopping Cart</title>
+<link rel='stylesheet' type='text/css' media='all' href='<?php echo base_url().'css/style.css'; ?>' />
 <script language="JavaScript" type="text/javascript">
 var itemCount = 0;
 var total = 0;
@@ -50,27 +51,25 @@ function updateTotal()
 
 </head>
 <body>
-<table summary="">
-<tr>
-
-<td>
+<?php include("header.php"); ?>
 <?php include("menu.php"); ?>
-</td>
 
-<td>
+<div id="content">
 
-<?php echo form_open('shoppingCart'); ?>
+<?php echo form_open('order/checkout'); ?>
 
 <input type="hidden" name="itemsTotal" id="itemsTotal" value="0"></input>
 
 Select Buyer:
-<select>
+<select name="userID">
 
-<?php foreach($users as $user): ?>
-<?php echo '<option value="' . $user->last_name . $user->first_name . '">'; ?>
-<?php echo $user->last_name . ', ' . $user->first_name; ?>
-<?php echo '</option>'; ?>
-<?php endforeach; ?>
+<?php
+foreach($users as $user){ 
+    echo '<option value="' . $user['userID'] . '">';
+    echo $user['last_name'] . ', ' . $user['first_name'];
+    echo '</option>'; 
+}
+?>
 
 </select>
 
@@ -84,31 +83,25 @@ Select Buyer:
 
 $colNum = 0;
 
-foreach($listitems as $listitem):
+foreach($listitems as $listitem){
 
-if($colNum == 4)
-{
-   echo '</tr><tr>';
-	 $colNum = 0;
+    if($colNum == 4)
+    {
+        echo '</tr><tr>';
+        $colNum = 0;
+    }
+
+    //The onClick is what adds items to the invoice list
+    //The format is addItem(itemNumber, cost, description) the quantity is obtained via prompt
+    echo '<td><center><img src="' . base_url().'pictures/items/'.$listitem->picture;
+    echo '" height="128" width="128" onClick="addItem(';
+    echo $listitem->itemID.', '. $listitem->pointcost .', ';
+    echo '\''. $listitem->description .'\')"/><br>' . $listitem->qty . '</center></td>';
+    $colNum++;
+
 }
-
-//The onClick is what adds items to the invoice list
-//The format is addItem(itemNumber, cost, description) the quantity is obtained via prompt
-echo '<td><center><img src="' . $listitem->picture . '" height="128" width="128" onClick="addItem(1, 2, \'really cool\')"/><br>' . $listitem->qty . '</center></td>';
-$colNum++;
-
-endforeach;
-
 ?>
-
-<!---- These need to be removed after real images are being queried // -->
-<td><center><img src="defaultitem.jpg" height="128" width="128" onClick="addItem(1, 2, 'really cool')" /><br>2</center></td>
-<td><center><img src="defaultitem.jpg" height="128" width="128" onClick="addItem(2, 2, 'really cool')" /><br>1</center></td>
-<td><center><img src="defaultitem.jpg" height="128" width="128" onClick="addItem(3, 2, 'really cool')" /><br>4</center></td>
-<td><center><img src="defaultitem.jpg" height="128" width="128" onClick="addItem(4, 2, 'really cool')" /><br>1</center></td>
-
 </tr>
-
 <tr>
 
 <td>Item#</td>
@@ -128,11 +121,9 @@ endforeach;
 <td><input type="submit" name="checkout" value="Checkout" /></td>
 </tr>
 </table>
-
 </form>
-</td>
+</div>
 
-</tr>
-</table>
+<?php include("footer.php"); ?>
 </body>
 </html>

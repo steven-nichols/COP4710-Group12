@@ -155,6 +155,10 @@ class User_model extends CI_Model {
         return sha1($password.$this->config->item('encryption_key'));
     }
 
+    function is_helper($userid){
+        return is_trusted_helper($userid) || is_adult_helper($userid) ||
+            is_teen_helper($userid);
+    } 
     /**
      * Returns true if the user's account type is Trusted Helper.
      *

@@ -8,11 +8,11 @@ else
 
 <ul class="nav">
 <li><?php echo anchor('login/logout', 'Log out'); ?></li>
+<li><?php echo anchor('order', 'Shopping Cart'); ?></li>
 <li><?php echo anchor('account', 'Accounts'); ?></li>
-<li><?php echo anchor('history', 'History'); ?></li>
-<li><?php echo anchor('shoppingCart', 'Shopping Cart'); ?></li>
 <li><?php echo anchor('item', 'Items'); ?></li>
 <li><?php echo anchor('transaction', 'Transactions'); ?></li>
-<li><?php echo anchor('currentInventory', 'Inventory'); ?></li>
+<li><?php echo anchor('inventory', 'Inventory'); ?></li>
+<li><?php echo anchor('history', 'History'); ?></li>
 </ul>
 </div>
