@@ -9,8 +9,6 @@
 <div id="content">
 <h1>Add/Modify Users</h1>
 
-<?php echo anchor('welcome', 'Cancel') . '<br>';?>
-
 <?php echo form_open('account/add'); ?>
 <p>You may add a new user to the database here</p>
 <p><input type="submit" value="Add New"/></p>
