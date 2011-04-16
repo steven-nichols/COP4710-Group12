@@ -14,8 +14,9 @@ body {
 
 #header{
     display:block;
-    height:60px;
+    height:120px;
     background-color:#006295;
+    background: #006295 url("../pictures/header.jpg");
     border-bottom: 2px solid #DAD1B7;
 }
 
