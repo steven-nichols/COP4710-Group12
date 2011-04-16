@@ -47,9 +47,16 @@ End Date: <input id="endDate" type="text" size="15" maxlength="50" name="endDate
 
 <?php
    $itemTotal = 0;
-	 
+   $bg = "ltrow";
+
 	 foreach($listitems as $listitem):
-	    echo '<tr>';
+      //Alternates row color background via css
+	    if($itemTotal % 2 == 0)
+			   $bg = "ltrow";
+			else
+				 $bg = "dkrow";
+				 
+	    echo '<tr id="' . $bg . '">';
 			
 			echo '<td id="itemNumber' . itemTotal . '">' . $listitem->itemNumber . '</td>';
 			echo '<td id="cost' . itemTotal . '">' . $listitem->pointCost . '</td>';

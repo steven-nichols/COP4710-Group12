@@ -37,9 +37,16 @@
 
 <?php
 $itemTotal = 0;
+$bg = "ltrow";
 
 foreach($listitems as $listitem){
-    echo '<tr>';
+    //Alternates row color background via css
+    if($itemTotal % 2 == 0)
+		   $bg = "ltrow";
+		else
+		   $bg = "dkrow";
+		
+		echo '<tr id="' . $bg . '">';
 
     echo '<td id="itemNumber' . $itemTotal . '">' . $listitem->partno . '</td>';
     echo '<td id="purchaseLocation' . $itemTotal . '">' . $listitem->supplierurl . '</td>';

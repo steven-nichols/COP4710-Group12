@@ -12,8 +12,15 @@ var total = 0;
 //The quantity for the items to be added are decided via prompt dialog box
 function addItem(itemNum, cost, descrp)
 {
-   var quantity = prompt('How many are being purchased?', '1');
-   var tempStr = "<tr id=\"item" + itemCount + "\">";
+//Saved incase needed var tempStr = "<tr id=\"item" + itemCount + "\">";
+
+   //Alternates row color background via css
+   var bg = "ltrow";
+   if(itemCount % 2 != 0)
+      bg = "dkrow";
+
+   var quantity = prompt('The cost for each of these is ' + cost + '. How many are being purchased?', '1');
+   var tempStr = "<tr id=\"" + bg + "\">";
 	 tempStr += "<td id=\"itemNumber" + itemCount + "\">" + itemNum + "</td>";
 	 tempStr += "<td id=\"quantity" + itemCount + "\">" + quantity + "</td>";
 	 tempStr += "<td id=\"cost" + itemCount + "\">" + cost + "</td>";

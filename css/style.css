@@ -67,3 +67,11 @@ a:hover {
 a:active {
     color: #88AAFF;
 }
+
+#ltrow {
+    background-color: #FFFFFF;
+}
+
+#dkrow {
+    background-color: #EEEEEE;
+}

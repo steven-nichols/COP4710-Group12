@@ -32,6 +32,8 @@ foreach($users as $user){
 
 <?php 
 $itemTotal = 0;
+$bg = "ltrow";
+
 foreach($transactions as $transaction){
     $itemTotal = 0;
 
@@ -49,7 +51,13 @@ foreach($transactions as $transaction){
     echo '</tr>';
 
     foreach($transaction->items as $item){
-        echo '<tr>';
+		    //Alternates row color background via css
+		    if($itemTotal % 2 == 0)
+				   $bg = "ltrow";
+				else
+				   $bg = "dkrow";
+				
+				echo '<tr id="' . $bg . '">';
 
         echo '<td id="itemNumber' . $itemTotal . '">' . $item->itemID . '</td>';
         //echo '<td id="purchaseLocation' . $itemTotal . '">' . $item->purchaseLocation . '</td>';
