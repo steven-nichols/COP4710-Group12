@@ -108,9 +108,12 @@ echo '<script type="text/javascript">itemCount = ' . $itemTotal . ';</script>';
 <br>
 
 <tr>
-<td><input type="submit" name="confirm" value="Confirm" /> / <input type="submit" name="cancel" value="Cancel" /></td>
+<td><input type="submit" name="confirm" value="Confirm" /> / <a href="index"><input type="button" name="cancel" value="Cancel" /></a></td>
 </tr>
 <br>
+
+
+
 
 </table>
 

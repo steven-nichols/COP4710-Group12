@@ -1,6 +1,6 @@
 <?php
 /*
- * Controller for the Account creation page.
+ * 
  */
 class Transaction extends CI_Controller {
     function __construct(){

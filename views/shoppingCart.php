@@ -20,24 +20,26 @@ function addItem(itemNum, cost, descrp)
       bg = "dkrow";
 
    var quantity = prompt('The cost for each of these is ' + cost + '. How many are being purchased?', '1');
-   var tempStr = "<tr id=\"" + bg + "\">";
-	 tempStr += "<td id=\"itemNumber" + itemCount + "\">" + itemNum + "</td>";
-	 tempStr += "<td id=\"quantity" + itemCount + "\">" + quantity + "</td>";
-	 tempStr += "<td id=\"cost" + itemCount + "\">" + cost + "</td>";
-	 tempStr += "<td id=\"description" + itemCount + "\">" + descrp + "</td>";
-	 
-	 //This is an update to allow the data to be accessed by the PHP
-	 //Hidden fields are generated with the appropriate data
-	 tempStr += "<input type=\"hidden\" name=\"HitemNumber" + itemCount + "\" value=\"" + itemNum + "\"></input>";
-	 tempStr += "<input type=\"hidden\" name=\"Hquantity" + itemCount + "\" value=\"" + quantity + "\"></input>";
-	 tempStr += "<input type=\"hidden\" name=\"Hcost" + itemCount + "\" value=\"" + cost + "\"></input>";
-	 tempStr += "<input type=\"hidden\" name=\"Hdescription" + itemCount + "\" value=\"" + descrp + "\"></input>";
-	 tempStr += "</tr>";
-	 
-   document.getElementById("itemList").innerHTML += tempStr;
-	 
-	 itemCount++;
-	 document.getElementById("itemsTotal").value = itemCount;
+   if(quantity != null){   
+       var tempStr = "<tr id=\"" + bg + "\">";
+	     tempStr += "<td id=\"itemNumber" + itemCount + "\">" + itemNum + "</td>";
+	     tempStr += "<td id=\"quantity" + itemCount + "\">" + quantity + "</td>";
+	     tempStr += "<td id=\"cost" + itemCount + "\">" + cost + "</td>";
+	     tempStr += "<td id=\"description" + itemCount + "\">" + descrp + "</td>";
+	     
+	     //This is an update to allow the data to be accessed by the PHP
+	     //Hidden fields are generated with the appropriate data
+	     tempStr += "<input type=\"hidden\" name=\"HitemNumber" + itemCount + "\" value=\"" + itemNum + "\"></input>";
+	     tempStr += "<input type=\"hidden\" name=\"Hquantity" + itemCount + "\" value=\"" + quantity + "\"></input>";
+	     tempStr += "<input type=\"hidden\" name=\"Hcost" + itemCount + "\" value=\"" + cost + "\"></input>";
+	     tempStr += "<input type=\"hidden\" name=\"Hdescription" + itemCount + "\" value=\"" + descrp + "\"></input>";
+	     tempStr += "</tr>";
+	     
+       document.getElementById("itemList").innerHTML += tempStr;
+	     
+	     itemCount++;
+	     document.getElementById("itemsTotal").value = itemCount;
+	 }
 	 
 	 updateTotal();
 }
@@ -91,6 +93,9 @@ foreach($users as $user){
 $colNum = 0;
 
 foreach($listitems as $listitem){
+    if ($listitem->qty == 0){
+        continue;
+    }
 
     if($colNum == 4)
     {
@@ -103,7 +108,7 @@ foreach($listitems as $listitem){
     echo '<td><center><img src="' . base_url().'pictures/items/'.$listitem->picture;
     echo '" height="128" width="128" onClick="addItem(';
     echo $listitem->itemID.', '. $listitem->pointcost .', ';
-    echo '\''. $listitem->description .'\')"/><br>' . $listitem->qty . '</center></td>';
+    echo '\''. $listitem->description .'\')"/><br>' . $listitem->description . "<br />points: " . $listitem->pointcost . "<br />avail: " . $listitem->qty . '</center></td>';
     $colNum++;
 
 }
