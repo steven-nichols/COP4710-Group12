@@ -6,8 +6,8 @@ body {
 }
 
 #wrapper {
-	margin:0 auto;
-	width:800px;
+    margin:0 auto;
+    width:800px;
     background:url("../pictures/background2.png");
     border: 2px solid #ccc;
 }
@@ -18,11 +18,13 @@ body {
     background-color:#006295;
     border-bottom: 2px solid #DAD1B7;
 }
+
 #sidebar{
     float:left;
     width:196px;
     padding-left:4px;
 }
+
 #content{
     float:right;
     width:596px;
@@ -30,6 +32,7 @@ body {
     color: #231F20;
     padding-left:4px;
 }
+
 #footer{
     clear:both;
     font-size:8pt;
@@ -46,4 +49,20 @@ div.error {
     border: 1px solid #d8000c;
     margin:4px;
     padding:4px;
+}
+
+a:link {
+    color: #2244AA;
+}
+
+a:visited {
+    color: #2244AA;
+}
+
+a:hover {
+    color: #4488FF;
+}
+
+a:active {
+    color: #88AAFF;
 }
