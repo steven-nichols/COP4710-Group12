@@ -1,10 +1,10 @@
 <div id="sidebar">
-<img src="<?php 
+<img class="profpic" src="<?php 
 if(isset($picture))
     echo base_url()."pictures/users/".$picture;
 else
     echo base_url()."pictures/users/"."default_user.jpg";
-?>" width="175" /> <br>
+?>" width="175" />
 
 <ul class="nav">
 <li><?php echo anchor('login/logout', 'Log out'); ?></li>

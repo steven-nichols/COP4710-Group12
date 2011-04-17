@@ -26,6 +26,25 @@ body {
     padding-left:4px;
 }
 
+#sidebar ul {
+    list-style:none;
+    margin-left:0.5em;
+    padding-left:0;
+}
+#sidebar ul li {
+    padding:0.2em 0 0.2em 0;
+}
+#sidebar ul li:before {
+	content: "\00BB \0020";
+}
+
+#sidebar img.profpic {
+    width:175px;
+    margin: 5px 0 0 3px;
+    padding: 2px;
+    background-color:#fff;
+    border: 1px solid #ccc;
+}
 #content{
     float:right;
     width:596px;
@@ -52,8 +71,13 @@ div.error {
     padding:4px;
 }
 
+table td {
+    font-size:10pt;
+}
+
 a:link {
     color: #2244AA;
+    text-decoration:none;
 }
 
 a:visited {
@@ -62,6 +86,7 @@ a:visited {
 
 a:hover {
     color: #4488FF;
+    text-decoration:underline;
 }
 
 a:active {
