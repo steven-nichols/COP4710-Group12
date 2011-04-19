@@ -86,7 +86,15 @@ class order extends CI_Controller {
             $pointCost = $this->input->post('cost'.$i);
             $qty = $this->input->post('quantity'.$i);
 
+            $oldinfo = $this->Item_model->get_item_by_id($itemID);
+            $oldqty = $oldinfo['qty'];
+            $newqty = $oldqty - $qty;
+
             $this->Item_model->add_trans_item($itemID, $transID, $pointCost, $qty); 
+            $this->Item_model->modify_item_qty($itemID,$newqty);
+            
+            
+            
         }
 
         $this->load->view('checkout_success');
