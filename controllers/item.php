@@ -72,7 +72,7 @@ class Item extends CI_Controller {
             // Add a new
             $item_types = $this->item_model->get_item_types();
             $mod_types = $this->item_model->get_mod_types();
-
+            print_r($mod_types);
             $data = array(
                 "title" => "Add New Item",
                 "picture" => $this->session->userdata['picture'],

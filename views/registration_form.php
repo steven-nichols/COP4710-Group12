@@ -122,7 +122,6 @@ if( (!isset($userID)) || (isset($userID) && $active) )
     </tr>
 
 </table>
-<p>* Required</p>
 <input type="submit" value="Submit" />
 
 </form>
