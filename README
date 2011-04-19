@@ -1,6 +1,9 @@
 CBCKidsDB README
 
-++ Installation:
+++ INSTALLATION:
+    (The presence of a webserver, php parser, and MySQL server are assumed; 
+    install and configure them if they are not present.):
+
     1) Install CodeIgniter www.codeigniter.com
 
     2) Configure a MySQL database per the schemata in the Design Document.  The 
@@ -42,11 +45,15 @@ CBCKidsDB README
 
     9) Using phpMyAdmin, the command line, or another interface of your choice, 
        populate the database with the currently known users and inventory.
+        +) Alternatively, only add trusted users manually and use the CBCKidsDB
+           interface to populate the remaining data.
 
     10) Profit?
     
-++ Notes
+++ NOTES:
     1) Within the pictures folder are two folders called 'items' and 'users'. 
        Place the pictures of the items and users into these folders, 
        respectively.  Ensure that the filename matches what is in the DB, 
        correct one or the other if they are not.  
+       
+    2) Make sure to backup your database!
