@@ -45,6 +45,7 @@ echo "<br>";
 
 foreach($transactions as $transaction){
     $itemTotal = 0;
+    $rows = 0;
 
     echo 'Date: ' . $transaction->date . '<br>';
 //    echo 'Child: ' . $transaction->userID . '<br>';
@@ -65,7 +66,7 @@ foreach($transactions as $transaction){
         $itemdesc = $itemdata['description'];        
         
 	    //Alternates row color background via css
-	    if($itemTotal % 2 == 0)
+	    if($rows % 2 == 0)
 			   $bg = "ltrow";
 			else
 			   $bg = "dkrow";
@@ -82,6 +83,7 @@ foreach($transactions as $transaction){
 
         echo '</tr>';
 
+        $rows++;
         $itemTotal+= $item->salePrice;
     }
 

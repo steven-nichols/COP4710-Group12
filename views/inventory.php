@@ -24,16 +24,6 @@
 <td>Description</td>
 <td>Quantity</td>
 
-</tr>
-
-<tr id="item0">
-<td id="itemNumber0">12345</td>
-<td id="purchaseLocation0">Walmart Website</td>
-<td id="realCost0">0.50</td>
-<td id="cost0">2</td>
-<td id="description0">Something cool</td>
-<td id="quantity0">6</td>
-</tr>
 
 <?php
 $itemTotal = 0;

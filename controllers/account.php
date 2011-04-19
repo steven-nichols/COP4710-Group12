@@ -83,7 +83,10 @@ class Account extends CI_Controller {
         if($this->form_validation->run() == FALSE)
         {
             // Add a new user
-            $this->load->view('registration_form');
+            $data = array(
+                "picture" => $this->session->userdata['picture']
+            );
+            $this->load->view('registration_form', $data);
         }
         else // Form validation passed 
         {

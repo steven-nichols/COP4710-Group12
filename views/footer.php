@@ -1,5 +1,5 @@
 <div id="footer">
-Copyright ...
+Copyright 2011 CBCKidsDB
 </div>
 
 </div>
