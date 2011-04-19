@@ -69,7 +69,7 @@ function updateTotal()
 
 <input type="hidden" name="itemsTotal" id="itemsTotal" value="0"></input>
 
-Select Buyer:
+<h3>Select Buyer:</h3>
 <select name="userID">
 
 <?php
