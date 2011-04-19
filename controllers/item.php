@@ -7,14 +7,14 @@ class Item extends CI_Controller {
         parent::__construct();
         
         $this->load->model('User_model');
-        $this->load->model('item_model');
+        $this->load->model('Item_model');
         $this->load->library('session');
         $this->load->helper(array('url', 'form'));
     }
 
     function index(){
-        $total_items = $this->item_model->get_item_count(1);
-        $items = $this->item_model->get_item_range(0, $total_items);
+        $total_items = $this->Item_model->get_item_count(1);
+        $items = $this->Item_model->get_item_range(0, $total_items);
         $data = array(
             "picture" => $this->session->userdata['picture'],
             "listitems" => $items,
@@ -70,8 +70,8 @@ class Item extends CI_Controller {
         if($this->form_validation->run() == FALSE)
         {
             // Add a new
-            $item_types = $this->item_model->get_item_types();
-            $mod_types = $this->item_model->get_mod_types();
+            $item_types = $this->Item_model->get_item_types();
+            $mod_types = $this->Item_model->get_mod_types();
 
             $data = array(
                 "title" => "Add New Item",
@@ -97,13 +97,13 @@ class Item extends CI_Controller {
             $qty = $this->input->post('quantity', TRUE);
 
             // Attempt to add the new user to the database
-            $success = $this->item_model->add_item($description, $supplier,
+            $success = $this->Item_model->add_item($description, $supplier,
                 $url, $partno, $type, $available, $realcost, $pointcost,
                 $qty, $minqty, $picture);
 
             if($success)
             {
-                $this->item_model->record_manual_adjustment($userid, $itemid,
+                $this->Item_model->record_manual_adjustment($userid, $itemid,
                     $moddesc, $modreason);
                 $this->load->view('item_success');
             }
@@ -157,9 +157,9 @@ class Item extends CI_Controller {
         if($this->form_validation->run() == FALSE)
         {
             // pull user information from database
-            $item = $this->item_model->get_item_by_id($itemid);
-            $item_types = $this->item_model->get_item_types();
-            $mod_types = $this->item_model->get_mod_types();
+            $item = $this->Item_model->get_item_by_id($itemid);
+            $item_types = $this->Item_model->get_item_types();
+            $mod_types = $this->Item_model->get_mod_types();
 
             $data = array(
                 "title" => "Modify Item",
@@ -187,14 +187,14 @@ class Item extends CI_Controller {
             $modreason = $this->input->post('modificationReason', TRUE);
             $moddesc = $this->input->post('modificationDescription', TRUE);
         
-            $success = $this->item_model->modify_item($itemid, 
+            $success = $this->Item_model->modify_item($itemid, 
                 $description, $supplier, $url, $partno, $type, $available, 
                 $realcost, $pointcost, $qty, $minqty, $picture);
         
 
             if($success)
             {
-                $this->item_model->record_manual_adjustment($helperid, $itemid,
+                $this->Item_model->record_manual_adjustment($helperid, $itemid,
                     $moddesc, $modreason);
 
                 $this->load->view('item_success');
