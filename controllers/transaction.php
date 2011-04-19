@@ -14,17 +14,24 @@ class Transaction extends CI_Controller {
 
     function index(){
         $num_users = $this->User_model->get_user_count(1);
-        $users = $this->User_model->get_user_range(0,$num_users,1);
+        $users = $this->User_model->get_user_by_type('child',false);
         $childid = $this->input->post('childID');
-        if($childid)
+
+        if($childid){
             $transactions = $this->Item_model->get_transaction_child($childid);
-        else
-            $transactions = $this->Item_model->get_transactions();
+            $last30 = false;
+        }else{
+            #$transactions = $this->Item_model->get_transactions();
+            $transactions = $this->Item_model->get_transaction_range(0,30);
+            $last30 = true;
+        }
         
         $data = array (
             "picture" => $this->session->userdata['picture'],
             "users" => $users,
-            "transactions" => $transactions
+            "child" => $this->User_model->get_user_data($childid),
+            "transactions" => $transactions,
+            "last30" => $last30
         );
         $this->load->view('transactionHistory', $data);
     }

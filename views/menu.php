@@ -13,6 +13,7 @@ else
 <li><?php echo anchor('item', 'Items'); ?></li>
 <li><?php echo anchor('transaction', 'Transactions'); ?></li>
 <li><?php echo anchor('inventory', 'Inventory'); ?></li>
-<li><?php echo anchor('history', 'History'); ?></li>
+<!--<li><?php echo anchor('history', 'History'); ?>-->
+</li>
 </ul>
 </div>

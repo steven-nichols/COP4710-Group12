@@ -316,19 +316,31 @@ class Item_model extends CI_Model {
         $sql = "SELECT * FROM `transactions` WHERE userID = ? ORDER BY `date`";
         $query = $this->db->query($sql, array($userid));
 
-        if($query->num_rows > 0)
+        if($query->num_rows > 0){
+            foreach ($query->result() as $row){
+                $items = $this->get_transaction_items($row->transactionID);
+                $row->items = $items;
+                print_r($row);
+            }
             return $query->result();
+        }
 
         return null;
     }
 
     function get_transaction_range($start=0, $count=30)
     {
-        $sql = "SELECT * FROM `transactions` ORDER BY `itemID` LIMIT ?,  ?";
+        $sql = "SELECT * FROM `transactions` ORDER BY `transactionID` LIMIT ?,  ?";
         $query = $this->db->query($sql, array($start, $count));
 
-        if($query->num_rows > 0)
+        if($query->num_rows > 0){
+            foreach ($query->result() as $row){
+                $items = $this->get_transaction_items($row->transactionID);
+                $row->items = $items;
+                print_r($row);
+            }
             return $query->result();
+        }
 
         return null;
     }
