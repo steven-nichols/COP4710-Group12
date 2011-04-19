@@ -300,11 +300,11 @@ class Item_model extends CI_Model {
         $query = $this->db->query($sql);
 
         if($query->num_rows > 0){
-            foreach ($query->result() as $row){
+          /*  foreach ($query->result() as $row){
                 $items = $this->get_transaction_items($row->transactionID);
                 $row->items = $items;
                 print_r($row);
-            }
+            }*/
             return $query->result();
         }
 
@@ -317,11 +317,11 @@ class Item_model extends CI_Model {
         $query = $this->db->query($sql, array($userid));
 
         if($query->num_rows > 0){
-            foreach ($query->result() as $row){
+          /*  foreach ($query->result() as $row){
                 $items = $this->get_transaction_items($row->transactionID);
                 $row->items = $items;
                 print_r($row);
-            }
+            }*/
             return $query->result();
         }
 
@@ -334,11 +334,11 @@ class Item_model extends CI_Model {
         $query = $this->db->query($sql, array($start, $count));
 
         if($query->num_rows > 0){
-            foreach ($query->result() as $row){
+          /*  foreach ($query->result() as $row){
                 $items = $this->get_transaction_items($row->transactionID);
                 $row->items = $items;
                 print_r($row);
-            }
+            }*/
             return $query->result();
         }
 

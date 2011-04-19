@@ -7,6 +7,7 @@ class inventory extends CI_Controller {
         parent::__construct();
 
         $this->load->model('Item_model');
+        $this->load->model('User_model');
         $this->load->library('session');
         $this->load->helper(array('url', 'form'));
     }
@@ -19,6 +20,13 @@ class inventory extends CI_Controller {
             redirect('/login');
             exit();
         }
+        
+        // Kids would be bored by this
+        $helperid = $this->session->userdata('userid');
+        if($this->User_model->is_child($helperid)){
+            die("People with 'child' level permissions would be bored to death by this.");
+        }
+        
 		$num_items = $this->Item_model->get_item_count(1);
         $items = $this->Item_model->get_item_range(0,$num_items,1);
 

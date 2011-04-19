@@ -13,6 +13,20 @@ class Transaction extends CI_Controller {
     }
 
     function index(){
+        // Make sure person is logged in
+        $logged_in = $this->session->userdata('logged_in');
+        if(!$logged_in){
+            redirect('/login');
+            exit();
+        }
+        
+        // Only helpers should be allowed to perform transactions.
+        $helperid = $this->session->userdata('userid');
+        if(!$this->User_model->is_helper($helperid)){
+            die("Only people with 'Teen Helper' level and higher permissions can view histories.");
+        }
+    
+
         $num_users = $this->User_model->get_user_count(1);
         $users = $this->User_model->get_user_by_type('child',false);
         $childid = $this->input->post('childID');
