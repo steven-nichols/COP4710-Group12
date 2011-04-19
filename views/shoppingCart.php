@@ -20,7 +20,7 @@ function addItem(itemNum, cost, descrp)
       bg = "dkrow";
 
    var quantity = prompt('The cost for each of these is ' + cost + '. How many are being purchased?', '1');
-   if(quantity != null){   
+   if(quantity != null && quantity > 0){   
        var tempStr = "<tr id=\"" + bg + "\">";
 	     tempStr += "<td id=\"itemNumber" + itemCount + "\">" + itemNum + "</td>";
 	     tempStr += "<td id=\"quantity" + itemCount + "\">" + quantity + "</td>";
