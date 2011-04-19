@@ -1,0 +1,52 @@
+CBCKidsDB README
+
+++ Installation:
+    1) Install CodeIgniter www.codeigniter.com
+
+    2) Configure a MySQL database per the schemata in the Design Document.  The 
+       team makes the following recommendations:
+        a) Name the database 'CBCKidsDB'
+        b) Create an administrative user, with full permissions on that 
+           database, called 'CBCKidsAdmin'.  This is to be used by the 
+           administrator.
+        c) Create an account with the minimum required permissions (SELECT, 
+           INSERT, UPDATE, DELETE) on that database, called 'CBCKidsWeb'.  This 
+           is to be used by the interface, and is the username to use in 
+           step #7.
+
+    3) Clone a copy of CBCKidsDB from 
+       git://github.com/steven-nichols/COP4710-Group12.git 
+
+    4) The 'models', 'views', 'controllers', and 'helpers' folders should be 
+       copied into or symlinked from the 'CodeIgniter/application' folder 
+       (overwrite the existing folders).
+
+    5) The 'css', 'javascript', and 'pictures' folders should be copied into or 
+       symlinked from the webserver document root.
+
+    6) Configure 'index.php' in the webserver document root as appropriate for 
+       how CodeIgniter was installed (usually application and system folder 
+       paths and the 'ENVIRONMENT').
+
+    7) Configure 'CodeIgniter/application/config/config.php'.  Defaults should
+       be appropriate, with the following exceptions:
+        a) Ensure that 'encryption_key' is set, it is required for session 
+           control
+        b) If logging is enabled it may be necessary to alter the permissions 
+           on the folder so that the webserver can write to it.
+        c) Set 'sess_use_database' to TRUE
+
+    8) Configure CodeIgniter/application/config/database.php as required for 
+       your database installation.  Use the database and user you created in
+       step #2.
+
+    9) Using phpMyAdmin, the command line, or another interface of your choice, 
+       populate the database with the currently known users and inventory.
+
+    10) Profit?
+    
+++ Notes
+    1) Within the pictures folder are two folders called 'items' and 'users'. 
+       Place the pictures of the items and users into these folders, 
+       respectively.  Ensure that the filename matches what is in the DB, 
+       correct one or the other if they are not.  
